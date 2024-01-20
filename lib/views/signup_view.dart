@@ -1,10 +1,13 @@
 import 'package:donative/app/features/form_container_widget.dart';
+import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/user_auth/firebase_auth_services.dart';
 import 'package:donative/views/home_view.dart';
 import 'package:donative/views/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+final _signupKey = GlobalKey<FormState>();
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -14,6 +17,17 @@ class SignupView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<SignupView> {
+  uploadUsersData() async {
+    Map<String, dynamic> usersData = {
+      "firstName": _firstNameController.text,
+      "lastName": _lastNameController.text,
+      "phone": _phoneController.text,
+      "email": _emailController.text,
+    };
+    DatabaseMethods().addUsers(usersData);
+  }
+
+  bool _isLoading = false;
   final FirebaseAuthService _auth = FirebaseAuthService();
 
   String? validateInputBox(String? value) {
@@ -52,119 +66,149 @@ class _SignupViewState extends State<SignupView> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        child: Center(
-          child: Form(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "SIGN UP",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Row(
+      body: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16),
+            child: Center(
+              child: Form(
+                key: _signupKey,
+                child: SingleChildScrollView(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: FormContainerWidget(
-                            labelText: "First Name",
-                            controller: _firstNameController,
-                            isPasswordField: false,
-                            textInputType: TextInputType.name,
-                            validateInputBox: validateInputBox),
+                      const Text(
+                        "SIGN UP",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                       const SizedBox(
-                        width: 10,
+                        height: 15,
                       ),
-                      Expanded(
-                        child: FormContainerWidget(
-                            labelText: "Last Name",
-                            controller: _lastNameController,
-                            isPasswordField: false,
-                            textInputType: TextInputType.name,
-                            validateInputBox: validateInputBox),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: FormContainerWidget(
+                                labelText: "First Name",
+                                controller: _firstNameController,
+                                isPasswordField: false,
+                                textInputType: TextInputType.name,
+                                validateInputBox: validateInputBox),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: FormContainerWidget(
+                                labelText: "Last Name",
+                                controller: _lastNameController,
+                                isPasswordField: false,
+                                textInputType: TextInputType.name,
+                                validateInputBox: validateInputBox),
+                          ),
+                        ],
                       ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      FormContainerWidget(
+                          labelText: "Mobile Number",
+                          controller: _phoneController,
+                          isPasswordField: false,
+                          textInputType: TextInputType.phone,
+                          validateInputBox: validateInputBox),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      FormContainerWidget(
+                          labelText: "Email Address",
+                          controller: _emailController,
+                          textInputType: TextInputType.emailAddress,
+                          isPasswordField: false,
+                          validateInputBox: validateInputBox),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      FormContainerWidget(
+                          labelText: "Password",
+                          controller: _passwordController,
+                          isPasswordField: true,
+                          validateInputBox: validateInputBox),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      FormContainerWidget(
+                          labelText: "Confirm Password",
+                          controller: _confirmPasswordController,
+                          isPasswordField: true,
+                          validateInputBox: validateInputBox),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          if (_signupKey.currentState!.validate()) {
+                            _signUp();
+                            uploadUsersData();
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Please fill all the required fields",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                fontSize: 16.0);
+                          }
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer),
+                          child: Center(
+                            child: Text("Sign Up",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color:
+                                        Theme.of(context).colorScheme.primary)),
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginView()),
+                            );
+                          },
+                          child: const Text("Existing User? Login")),
                     ],
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  FormContainerWidget(
-                      labelText: "Mobile Number",
-                      controller: _phoneController,
-                      isPasswordField: false,
-                      textInputType: TextInputType.phone,
-                      validateInputBox: validateInputBox),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  FormContainerWidget(
-                      labelText: "Email Address",
-                      controller: _emailController,
-                      textInputType: TextInputType.emailAddress,
-                      isPasswordField: false,
-                      validateInputBox: validateInputBox),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  FormContainerWidget(
-                      labelText: "Password",
-                      controller: _passwordController,
-                      isPasswordField: true,
-                      validateInputBox: validateInputBox),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  FormContainerWidget(
-                      labelText: "Confirm Password",
-                      controller: _confirmPasswordController,
-                      isPasswordField: true,
-                      validateInputBox: validateInputBox),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  GestureDetector(
-                    onTap: _signUp,
-                    child: Container(
-                      width: double.infinity,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color:
-                              Theme.of(context).colorScheme.primaryContainer),
-                      child: Center(
-                        child: Text("Sign Up",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Theme.of(context).colorScheme.primary)),
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginView()),
-                        );
-                      },
-                      child: const Text("Existing User? Login")),
-                ],
+                ),
               ),
             ),
           ),
-        ),
+          if (_isLoading)
+            Container(
+              color: Colors.black.withOpacity(0.5),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+        ],
       ),
     );
   }
 
   void _signUp() async {
+    setState(() {
+      _isLoading = true;
+    });
     String? firstName = _firstNameController.text;
     String? lastName = _lastNameController.text;
     String? phone = _phoneController.text;
@@ -182,8 +226,7 @@ class _SignupViewState extends State<SignupView> {
           await user.sendEmailVerification();
 
           Fluttertoast.showToast(
-              msg:
-                  "Account created successfully.",
+              msg: "Account created successfully.",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               backgroundColor: Colors.green,
