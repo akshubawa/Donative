@@ -1,4 +1,5 @@
 import 'package:donative/app/features/form_container_widget.dart';
+import 'package:donative/app/features/toast.dart';
 import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/user_auth/firebase_auth_services.dart';
 import 'package:donative/views/home_view.dart';
@@ -150,7 +151,6 @@ class _SignupViewState extends State<SignupView> {
                         onTap: () {
                           if (_signupKey.currentState!.validate()) {
                             _signUp();
-                            uploadUsersData();
                           } else {
                             Fluttertoast.showToast(
                               msg: "Please fill all the required fields",
@@ -230,28 +230,31 @@ class _SignupViewState extends State<SignupView> {
               backgroundColor: Colors.green,
               textColor: Colors.white,
               fontSize: 16.0);
+          uploadUsersData();
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const HomeView()),
           );
         }
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'email-already-in-use') {
+          Fluttertoast.showToast(
+              msg: "Email already in use",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+              textColor: Theme.of(context).colorScheme.primary,
+              fontSize: 16.0);
+        }
       } catch (e) {
-        Fluttertoast.showToast(
-            msg: "Some error occured!",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
+        showToast(message: "Some error occured!", context: context);
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     } else {
-      Fluttertoast.showToast(
-          msg: "Password does not match",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      showToast(message: "Password does not match", context: context);
     }
   }
 }

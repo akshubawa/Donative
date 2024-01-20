@@ -1,10 +1,10 @@
 import 'package:donative/app/features/form_container_widget.dart';
+import 'package:donative/app/features/toast.dart';
 import 'package:donative/app/user_auth/firebase_auth_services.dart';
 import 'package:donative/views/home_view.dart';
 import 'package:donative/views/signup_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 final _loginKey = GlobalKey<FormState>();
 
@@ -89,17 +89,9 @@ class _LoginViewState extends State<LoginView> {
                           if (_loginKey.currentState!.validate()) {
                             _logIn();
                           } else {
-                            Fluttertoast.showToast(
-                              msg: "Please fill all the required fields",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              fontSize: 16.0,
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              textColor: Theme.of(context).colorScheme.primary,
-                            );
+                            showToast(
+                                message: "Please fill all the required fields",
+                                context: context);
                           }
                         },
                         child: Container(
@@ -159,26 +151,16 @@ class _LoginViewState extends State<LoginView> {
           email: email, password: password);
 
       if (user != null) {
-        Fluttertoast.showToast(
-            msg: "Login Successful!",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-            fontSize: 16.0);
+        showToast(message: "Login Successful!", context: context);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const HomeView()),
         );
       }
-    } catch (e) {
-      Fluttertoast.showToast(
-          msg: "Some error occured!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        showToast(message: "Email already in use", context: context);
+      }
     } finally {
       setState(() {
         _isLoading = false;
