@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "762726674958",
+    "project_id": "donative-e0a5e",
+    "storage_bucket": "donative-e0a5e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762726674958:android:1125fe9997da7d477d825f",
+        "android_client_info": {
+          "package_name": "com.example.donative"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUqFdSvViqXx4N2QRPz-NnTxAOAf6Rw5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
