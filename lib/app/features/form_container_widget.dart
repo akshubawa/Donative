@@ -88,13 +88,13 @@ class FormContainerWidget extends StatefulWidget {
 }
 
 class _FormContainerWidgetState extends State<FormContainerWidget> {
-  bool _isHidden = false;
+  bool _isHidden = true;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
       keyboardType: widget.textInputType,
-      obscureText: _isHidden,
+      obscureText: widget.isPasswordField == true ? _isHidden : false,
       decoration: InputDecoration(
         labelText: widget.labelText,
         border: OutlineInputBorder(
@@ -103,8 +103,9 @@ class _FormContainerWidgetState extends State<FormContainerWidget> {
         suffix: widget.isPasswordField
             ? InkWell(
                 onTap: _togglePasswordView,
-                child:
-                    Icon(!_isHidden ? Icons.visibility_off : Icons.visibility),
+                child: widget.isPasswordField == true
+                    ? Icon(_isHidden ? Icons.visibility_off : Icons.visibility)
+                    : null,
               )
             : null,
       ),

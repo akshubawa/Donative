@@ -153,11 +153,16 @@ class _SignupViewState extends State<SignupView> {
                             uploadUsersData();
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please fill all the required fields",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 1,
-                                fontSize: 16.0);
+                              msg: "Please fill all the required fields",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              fontSize: 16.0,
+                              backgroundColor: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                              textColor: Theme.of(context).colorScheme.primary,
+                            );
                           }
                         },
                         child: Container(
@@ -209,9 +214,6 @@ class _SignupViewState extends State<SignupView> {
     setState(() {
       _isLoading = true;
     });
-    String? firstName = _firstNameController.text;
-    String? lastName = _lastNameController.text;
-    String? phone = _phoneController.text;
     String? email = _emailController.text;
     String? password = _passwordController.text;
     String? confirmPassword = _confirmPasswordController.text;
@@ -221,10 +223,6 @@ class _SignupViewState extends State<SignupView> {
             email: email, password: password);
 
         if (user != null) {
-          await user.updateDisplayName("$firstName $lastName");
-          await user.updatePhotoURL(phone);
-          await user.sendEmailVerification();
-
           Fluttertoast.showToast(
               msg: "Account created successfully.",
               toastLength: Toast.LENGTH_SHORT,

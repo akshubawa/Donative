@@ -86,7 +86,21 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          _logIn();
+                          if (_loginKey.currentState!.validate()) {
+                            _logIn();
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: "Please fill all the required fields",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              fontSize: 16.0,
+                              backgroundColor: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                              textColor: Theme.of(context).colorScheme.primary,
+                            );
+                          }
                         },
                         child: Container(
                           width: double.infinity,
@@ -108,20 +122,11 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       TextButton(
                           onPressed: () {
-                            if (_loginKey.currentState!.validate()) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SignupView()),
-                              );
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Please fill all the required fields",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 1,
-                                  fontSize: 16.0);
-                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignupView()),
+                            );
                           },
                           child: const Text("New User? Sign Up")),
                     ],
