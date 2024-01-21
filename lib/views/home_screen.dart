@@ -17,34 +17,32 @@ class HomeScreen extends StatelessWidget {
             children: [
               Positioned(
                 top: 300,
-                child:
-                Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search...',
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Search...',
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-                      // Handle search action
-                    },
-                  ),
-                ],
+                    IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        // Handle search action
+                      },
+                    ),
+                  ],
+                ),
               ),
-              ),
-
               SizedBox(
                 height: 200,
                 child: ListView(
