@@ -1,6 +1,6 @@
 import 'package:donative/app/splash_screen/splash_screen.dart';
 import 'package:donative/themes/themes.dart';
-import 'package:donative/views/home_view.dart';
+import 'package:donative/views/profile_page.dart';
 import 'package:donative/views/signup_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +46,7 @@ class AuthChecker extends StatelessWidget {
           return const CircularProgressIndicator();
         }
         if (snapshot.hasData && snapshot.data != null) {
-          return const HomeView();
+          return const ProfilePage();
         } else {
           return const SignupView();
         }
