@@ -1,10 +1,13 @@
 import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
+import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/user_auth/firebase_auth_services.dart';
 import 'package:donative/views/home_view.dart';
 import 'package:donative/views/signup_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 final _loginKey = GlobalKey<FormState>();
 
@@ -107,8 +110,47 @@ class _LoginViewState extends State<LoginView> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
-                                    color:
-                                        Theme.of(context).colorScheme.primary)),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _signInWithGoogle();
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondaryContainer),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(FontAwesomeIcons.google,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Text("Sign in with Google",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer)),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -158,13 +200,60 @@ class _LoginViewState extends State<LoginView> {
         );
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        showToast(message: "Email already in use", context: context);
+      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+        showToast(message: "Invalid email or password", context: context);
       }
     } finally {
       setState(() {
         _isLoading = false;
       });
+    }
+  }
+
+  _signInWithGoogle() async {
+    setState(() {
+      _isLoading = true;
+    });
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+    try {
+      await _googleSignIn.signOut();
+
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
+
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+            idToken: googleSignInAuthentication.idToken,
+            accessToken: googleSignInAuthentication.accessToken);
+
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+        String? firstName = googleSignInAccount.displayName?.split(' ')[0];
+        String? lastName = googleSignInAccount.displayName?.split(' ')[1];
+        String? email = googleSignInAccount.email;
+
+        Map<String, dynamic> usersData = {
+          "firstName": firstName,
+          "lastName": lastName,
+          "email": email,
+        };
+        DatabaseMethods().addUsers(usersData);
+
+        showToast(message: "Login Successful!", context: context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeView()),
+        );
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      showToast(message: "An error occured!", context: context);
     }
   }
 }

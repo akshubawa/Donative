@@ -223,6 +223,10 @@ class _SignupViewState extends State<SignupView> {
             email: email, password: password);
 
         if (user != null) {
+          uploadUsersData();
+          setState(() {
+            _isLoading = true;
+          });
           Fluttertoast.showToast(
               msg: "Account created successfully.",
               toastLength: Toast.LENGTH_SHORT,
@@ -230,7 +234,6 @@ class _SignupViewState extends State<SignupView> {
               backgroundColor: Colors.green,
               textColor: Colors.white,
               fontSize: 16.0);
-          uploadUsersData();
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const HomeView()),
@@ -248,13 +251,15 @@ class _SignupViewState extends State<SignupView> {
         }
       } catch (e) {
         showToast(message: "Some error occured!", context: context);
-      } finally {
         setState(() {
           _isLoading = false;
         });
       }
     } else {
       showToast(message: "Password does not match", context: context);
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 }

@@ -1,11 +1,14 @@
 import 'package:donative/app/splash_screen/splash_screen.dart';
 import 'package:donative/themes/themes.dart';
-import 'package:donative/views/login_view.dart';
+import 'package:donative/views/home_view.dart';
+import 'package:donative/views/signup_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final FirebaseAuth auth;
+  const MyApp({required this.auth, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +25,32 @@ class MyApp extends StatelessWidget {
         colorScheme: MyThemes.darkColorScheme,
         fontFamily: GoogleFonts.dmSans().fontFamily,
       ),
-      home: const SplashScreen(
-        child: LoginView(),
+      home: SplashScreen(
+        child: AuthChecker(auth: auth),
       ),
+    );
+  }
+}
+
+class AuthChecker extends StatelessWidget {
+  final FirebaseAuth auth;
+
+  const AuthChecker({required this.auth, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: auth.authStateChanges(),
+      builder: (context, AsyncSnapshot<User?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        if (snapshot.hasData && snapshot.data != null) {
+          return const HomeView();
+        } else {
+          return const SignupView();
+        }
+      },
     );
   }
 }

@@ -41,6 +41,8 @@ dependencies:
   firebase_storage: ^11.6.0
   fluttertoast: ^8.2.4
   firebase_core: ^2.24.2
+  google_sign_in: ^6.2.1
+  font_awesome_flutter: ^10.6.0
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
 import 'package:donative/app/app.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,5 +14,5 @@ void main() async {
         messagingSenderId: '762726674958'),
   );
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(const MyApp());
+  runApp(MyApp(auth: FirebaseAuth.instance));
 }
