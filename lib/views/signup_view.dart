@@ -1,9 +1,10 @@
 import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
+import 'package:donative/app/user_auth/button_widget.dart';
 import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/user_auth/firebase_auth_services.dart';
-import 'package:donative/views/profile_page.dart';
 import 'package:donative/views/login_view.dart';
+import 'package:donative/views/screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -24,6 +25,7 @@ class _SignupViewState extends State<SignupView> {
       "lastName": _lastNameController.text,
       "phone": _phoneController.text,
       "email": _emailController.text,
+      "uid": FirebaseAuth.instance.currentUser!.uid,
     };
     DatabaseMethods().addUsers(usersData);
   }
@@ -147,42 +149,19 @@ class _SignupViewState extends State<SignupView> {
                       const SizedBox(
                         height: 15,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          if (_signupKey.currentState!.validate()) {
-                            _signUp();
-                          } else {
-                            Fluttertoast.showToast(
-                              msg: "Please fill all the required fields",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              fontSize: 16.0,
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              textColor: Theme.of(context).colorScheme.primary,
-                            );
-                          }
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer),
-                          child: Center(
-                            child: Text("Sign Up",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color:
-                                        Theme.of(context).colorScheme.primary)),
-                          ),
-                        ),
-                      ),
+                      ButtonWidget(
+                          onTap: () {
+                            if (_signupKey.currentState!.validate()) {
+                              _signUp();
+                            } else {
+                              showToast(
+                                  message:
+                                      "Please fill all the required fields",
+                                  context: context);
+                            }
+                          },
+                          buttonText: "Sign Up",
+                          toastMessage: null),
                       TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -227,16 +206,10 @@ class _SignupViewState extends State<SignupView> {
           setState(() {
             _isLoading = true;
           });
-          Fluttertoast.showToast(
-              msg: "Account created successfully.",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: Colors.green,
-              textColor: Colors.white,
-              fontSize: 16.0);
+          showToast(message: "Account created successfully.", context: context);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const ProfilePage()),
+            MaterialPageRoute(builder: (context) => const Screen()),
           );
         }
       } on FirebaseAuthException catch (e) {

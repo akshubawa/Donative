@@ -1,4 +1,3 @@
-import 'package:donative/app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
@@ -38,7 +37,7 @@ class _MenuState extends State<Menu> {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Color(0xFF196C32).withOpacity(.25),
+                color: const Color(0xFF196C32).withOpacity(.25),
                 blurRadius: 10,
                 spreadRadius: 2,
                 offset: const Offset(0, 10),
@@ -69,9 +68,9 @@ class _MenuState extends State<Menu> {
                       height: index == widget.currentIndex
                           ? size.width * .014
                           : 0,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Color(0xFF89F8C6),
-                        borderRadius: const BorderRadius.vertical(
+                        borderRadius: BorderRadius.vertical(
                           bottom: Radius.circular(10),
                         ),
                       ),
@@ -80,7 +79,7 @@ class _MenuState extends State<Menu> {
                       listOfIcons[index],
                       size: size.width * .06,
                       color: index == widget.currentIndex
-                          ? Color(0xFF89F8C6)
+                          ?const  Color(0xFF89F8C6)
                           : Colors.black38,
                     ),
                     SizedBox(height: size.width * .02),
