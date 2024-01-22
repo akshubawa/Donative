@@ -2,7 +2,8 @@ import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
 import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/user_auth/firebase_auth_services.dart';
-import 'package:donative/views/home_view.dart';
+import 'package:donative/views/profile_page.dart';
+import 'package:donative/views/screen.dart';
 import 'package:donative/views/signup_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -196,7 +197,7 @@ class _LoginViewState extends State<LoginView> {
         showToast(message: "Login Successful!", context: context);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const HomeView()),
+          MaterialPageRoute(builder: (context) => const Screen()),
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -246,7 +247,7 @@ class _LoginViewState extends State<LoginView> {
         showToast(message: "Login Successful!", context: context);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const HomeView()),
+          MaterialPageRoute(builder: (context) => const Screen()),
         );
       }
     } catch (e) {

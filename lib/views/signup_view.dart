@@ -2,7 +2,7 @@ import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
 import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/user_auth/firebase_auth_services.dart';
-import 'package:donative/views/home_view.dart';
+import 'package:donative/views/profile_page.dart';
 import 'package:donative/views/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -236,7 +236,7 @@ class _SignupViewState extends State<SignupView> {
               fontSize: 16.0);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const HomeView()),
+            MaterialPageRoute(builder: (context) => const ProfilePage()),
           );
         }
       } on FirebaseAuthException catch (e) {
