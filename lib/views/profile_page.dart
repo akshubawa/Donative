@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:donative/app/profile_menu/update_profile.dart';
 import 'package:donative/app/user_auth/button_widget.dart';
 import 'package:donative/views/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -73,7 +74,15 @@ class ProfilePage extends StatelessWidget {
                   const SizedBox(height: 15),
                   ButtonWidget(onTap: () {}, buttonText: "My Donations"),
                   const SizedBox(height: 15),
-                  ButtonWidget(onTap: () {}, buttonText: "Update Profile"),
+                  ButtonWidget(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const UpdateProfile()),
+                        );
+                      },
+                      buttonText: "Update Profile"),
                   const SizedBox(height: 15),
                   ButtonWidget(onTap: () {}, buttonText: "Settings"),
                   const SizedBox(height: 15),

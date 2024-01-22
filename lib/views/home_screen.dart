@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
+
+import '../app/features/build_funding_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -22,19 +23,20 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           Row(
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
+                  padding: const EdgeInsets.only(
+                      top: 5.0, bottom: 5.0, left: 16.0, right: 16.0),
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'Search...',
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Theme.of(context).colorScheme.surface,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -43,139 +45,91 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.search),
+                icon: const Icon(Icons.search),
                 onPressed: () {
                   // Handle search action
                 },
               ),
             ],
           ),
-          SizedBox(
-            height: 570,
+          Expanded(
             child: ListView(
               scrollDirection: Axis.vertical,
-              children: [
-                buildFundingCard(
+              children: const [
+                BuildFundingCard(
                     title: 'Cancer Funding',
-                    initiator: 'XYZ Organization',
-                    imageUrl: 'lib/app/assets/cancer_image.webp',
-                    raisedAmount: 500,
+                    initiator: 'Mr. Ram Mohan Joshi',
+                    imageUrl: 'lib/app/assets/cancer_image.jpg',
+                    raisedAmount: 300,
                     totalAmount: 1000),
-                buildFundingCard(
+                BuildFundingCard(
                     title: 'Liver Transplant Funding',
-                    initiator: 'ABC Foundation',
+                    initiator: 'Mrs. Geeta Rawat',
                     imageUrl: 'lib/app/assets/liver_transplant_image.jpg',
-                    raisedAmount: 500,
-                    totalAmount: 1000),
-                buildFundingCard(
-                    title: 'Liver Transplant Funding',
-                    initiator: 'ABC Foundation',
-                    imageUrl: 'lib/app/assets/liver_transplant_image.jpg',
-                    raisedAmount: 500,
-                    totalAmount: 1000),
-                buildFundingCard(
-                    title: 'Liver Transplant Funding',
-                    initiator: 'ABC Foundation',
-                    imageUrl: 'lib/app/assets/liver_transplant_image.jpg',
-                    raisedAmount: 500,
-                    totalAmount: 1000),
-                buildFundingCard(
-                    title: 'Liver Transplant Funding',
-                    initiator: 'ABC Foundation',
-                    imageUrl: 'lib/app/assets/liver_transplant_image.jpg',
-                    raisedAmount: 500,
-                    totalAmount: 1000),
+                    raisedAmount: 2500,
+                    totalAmount: 10000),
+                // BuildFundingCard(
+                //   title: 'Heart Surgery Funding',
+                //   initiator: 'Mr. Manohar Kumar',
+                //   imageUrl: 'lib/app/assets/heart_surgery_image.jpg',
+                //   raisedAmount: 1500,
+                //   totalAmount: 5000,
+                // ),
+                // BuildFundingCard(
+                //   title: 'Kidney Transplant Funding',
+                //   initiator: 'Miss. Anjali Singh',
+                //   imageUrl: 'lib/app/assets/kidney_transplant_image.jpg',
+                //   raisedAmount: 2000,
+                //   totalAmount: 8000,
+                // ),
+                // BuildFundingCard(
+                //   title: 'Lung Disease Treatment Funding',
+                //   initiator: 'Mr. Ramesh Kumar',
+                //   imageUrl: 'lib/app/assets/lung_disease_image.jpg',
+                //   raisedAmount: 1200,
+                //   totalAmount: 4000,
+                // ),
+                // BuildFundingCard(
+                //   title: 'Diabetes Research Funding',
+                //   initiator: 'Mrs. Sunita Sharma',
+                //   imageUrl: 'lib/app/assets/diabetes_research_image.jpg',
+                //   raisedAmount: 1800,
+                //   totalAmount: 6000,
+                // ),
+                // BuildFundingCard(
+                //   title: 'Alzheimer\'s Care Funding',
+                //   initiator: 'Mr. Rakesh Singh',
+                //   imageUrl: 'lib/app/assets/alzheimers_care_image.jpg',
+                //   raisedAmount: 2200,
+                //   totalAmount: 7000,
+                // ),
+                // BuildFundingCard(
+                //   title: 'Spinal Cord Injury Treatment Funding',
+                //   initiator: 'Miss. Ritu Singh',
+                //   imageUrl: 'lib/app/assets/spinal_cord_injury_image.jpg',
+                //   raisedAmount: 2700,
+                //   totalAmount: 9000,
+                // ),
+                // BuildFundingCard(
+                //   title: 'Rare Disease Treatment Funding',
+                //   initiator: 'Mr. Manoj Kumar',
+                //   imageUrl: 'lib/app/assets/rare_disease_image.jpg',
+                //   raisedAmount: 1900,
+                //   totalAmount: 7000,
+                // ),
+                // BuildFundingCard(
+                //   title: 'Mental Health Awareness Funding',
+                //   initiator: 'Mind Matters Organization',
+                //   imageUrl: 'lib/app/assets/mental_health_image.jpg',
+                //   raisedAmount: 1400,
+                //   totalAmount: 5000,
+                // ),
+
                 // Add more cards as needed
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget buildFundingCard({
-    required String title,
-    required String initiator,
-    required String imageUrl,
-    required double raisedAmount,
-    required double totalAmount,
-  }) {
-    // Calculate the percentage of money raised
-    double progressPercentage = ((raisedAmount / totalAmount) * 100);
-
-    return Padding(
-      padding:
-          const EdgeInsets.only(top: 8.0, bottom: 5.0, left: 8.0, right: 20),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        elevation: 5,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10.0),
-                topRight: Radius.circular(10.0),
-              ),
-              child: Image.asset(
-                imageUrl,
-                height: 100,
-                width: double.maxFinite,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Initiated by: $initiator',
-                    style: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-
-                  // LinearProgressIndicator for fundraising progress
-                  Row(
-                    children: [
-                      SizedBox(width: 264.7),
-                      Text(
-                        'Total: \$${totalAmount.toInt()}',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  // Stack for combining progress bar and raised amount
-                  FAProgressBar(
-                    currentValue: progressPercentage,
-                    displayText: '%',
-                    animatedDuration: const Duration(milliseconds: 800),
-                    backgroundColor: Colors.white,
-                    progressColor: const Color(0xFFC1F274),
-                    size: 20,
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
