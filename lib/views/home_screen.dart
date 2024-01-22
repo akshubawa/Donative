@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 
@@ -17,33 +19,33 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Positioned(
-            top: 300,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Search...',
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
+          SizedBox(
+            height: 8,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search...',
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    // Handle search action
-                  },
-                ),
-              ],
-            ),
+              ),
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  // Handle search action
+                },
+              ),
+            ],
           ),
           SizedBox(
             height: 570,
@@ -118,7 +120,7 @@ class HomeScreen extends StatelessWidget {
               child: Image.asset(
                 imageUrl,
                 height: 100,
-                width: 220,
+                width: double.maxFinite,
                 fit: BoxFit.cover,
               ),
             ),
@@ -163,7 +165,7 @@ class HomeScreen extends StatelessWidget {
                     displayText: '%',
                     animatedDuration: const Duration(milliseconds: 800),
                     backgroundColor: Colors.white,
-                    progressColor: Color.fromARGB(255, 103, 103, 103),
+                    progressColor: const Color(0xFFC1F274),
                     size: 20,
                   )
                 ],
