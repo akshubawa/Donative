@@ -1,6 +1,5 @@
 import 'package:donative/app/splash_screen/splash_screen.dart';
 import 'package:donative/themes/themes.dart';
-import 'package:donative/views/profile_page.dart';
 import 'package:donative/views/screen.dart';
 import 'package:donative/views/signup_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';

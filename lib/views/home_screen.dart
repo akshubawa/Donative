@@ -7,62 +7,70 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Crowd Funding App'),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        title: const Text(
+          "Donative",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
-      body: Stack(
-        alignment: AlignmentDirectional.center,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Positioned(
-                top: 300,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Search...',
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
+          Positioned(
+            top: 300,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Search...',
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        // Handle search action
-                      },
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 200,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    buildFundingCard(
-                      title: 'Cancer Funding',
-                      initiator: 'XYZ Organization',
-                      imageUrl: 'lib/app/assets/cancer_image.webp',
-                    ),
-                    buildFundingCard(
-                      title: 'Liver Transplant Funding',
-                      initiator: 'ABC Foundation',
-                      imageUrl: 'lib/app/assets/liver_transplant_image.jpg',
-                    ),
-                    // Add more cards as needed
-                  ],
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    // Handle search action
+                  },
                 ),
-              ),
-            ],
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              scrollDirection: Axis.vertical,
+              children: [
+                buildFundingCard(
+                  title: 'Cancer Funding',
+                  initiator: 'XYZ Organization',
+                  imageUrl: 'lib/app/assets/cancer_image.webp',
+                ),
+                buildFundingCard(
+                  title: 'Liver Transplant Funding',
+                  initiator: 'ABC Foundation',
+                  imageUrl: 'lib/app/assets/liver_transplant_image.jpg',
+                ),
+                buildFundingCard(
+                  title: 'Liver Transplant Funding',
+                  initiator: 'ABC Foundation',
+                  imageUrl: 'lib/app/assets/liver_transplant_image.jpg',
+                ),
+                buildFundingCard(
+                  title: 'Liver Transplant Funding',
+                  initiator: 'ABC Foundation',
+                  imageUrl: 'lib/app/assets/liver_transplant_image.jpg',
+                ),
+                // Add more cards as needed
+              ],
+            ),
           ),
         ],
       ),
@@ -85,14 +93,14 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10.0),
                 topRight: Radius.circular(10.0),
               ),
               child: Image.asset(
                 imageUrl,
                 height: 100,
-                width: 220,
+                width: double.infinity,
                 fit: BoxFit.cover,
               ),
             ),
@@ -103,15 +111,15 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     'Initiated by: $initiator',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                     ),
                   ),

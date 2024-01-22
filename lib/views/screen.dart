@@ -45,18 +45,16 @@ class _ScreenState extends State<Screen> {
       child: Scaffold(
           extendBody: true,
           body: PageView(
-            controller: pageController,
-            onPageChanged: (index) {
-              setState(() {
-                currentIndex = index;
-              });
-            },
-            children: [
-              HomeScreen(),
-
-              ProfilePage(),
-            ]
-          ),
+              controller: pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  currentIndex = index;
+                });
+              },
+              children: const [
+                HomeScreen(),
+                ProfilePage(),
+              ]),
           bottomNavigationBar: Menu(
               screenWidth: screenWidth,
               currentIndex: currentIndex,

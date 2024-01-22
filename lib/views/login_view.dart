@@ -1,5 +1,6 @@
 import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
+import 'package:donative/app/user_auth/button_widget.dart';
 import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/user_auth/firebase_auth_services.dart';
 import 'package:donative/views/profile_page.dart';
@@ -88,7 +89,7 @@ class _LoginViewState extends State<LoginView> {
                       const SizedBox(
                         height: 15,
                       ),
-                      GestureDetector(
+                      ButtonWidget(
                         onTap: () {
                           if (_loginKey.currentState!.validate()) {
                             _logIn();
@@ -98,63 +99,17 @@ class _LoginViewState extends State<LoginView> {
                                 context: context);
                           }
                         },
-                        child: Container(
-                          width: double.infinity,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer),
-                          child: Center(
-                            child: Text("Login",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimaryContainer)),
-                          ),
-                        ),
+                        buttonText: "Login",
+                        toastMessage: null,
                       ),
                       const SizedBox(
                         height: 15,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          _signInWithGoogle();
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .secondaryContainer),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(FontAwesomeIcons.google,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondaryContainer),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text("Sign in with Google",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondaryContainer)),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      ButtonWidget(
+                          onTap: () {
+                            _signInWithGoogle();
+                          },
+                          buttonText: "Sign in with Google"),
                       TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -241,6 +196,7 @@ class _LoginViewState extends State<LoginView> {
           "firstName": firstName,
           "lastName": lastName,
           "email": email,
+          "uid": FirebaseAuth.instance.currentUser!.uid,
         };
         DatabaseMethods().addUsers(usersData);
 
