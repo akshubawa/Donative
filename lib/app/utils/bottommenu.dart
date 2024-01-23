@@ -28,16 +28,16 @@ class _MenuState extends State<Menu> {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: widget.screenWidth,
-      height: 70,
+      height: widget.screenWidth * 0.11,
       color: Colors.transparent,
       child: Center(
         child: Container(
-          width: widget.screenWidth * .65,
-          height: 55,
+          width: widget.screenWidth * 0.65,
+          height: widget.screenWidth * 0.1,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF196C32).withOpacity(.25),
+                color: Theme.of(context).colorScheme.primary.withOpacity(.25),
                 blurRadius: 10,
                 spreadRadius: 2,
                 offset: const Offset(0, 10),
@@ -62,15 +62,15 @@ class _MenuState extends State<Menu> {
                       duration: const Duration(milliseconds: 1500),
                       curve: Curves.fastLinearToSlowEaseIn,
                       margin: EdgeInsets.only(
-                        bottom: index == widget.currentIndex ? 0 : size.width * .029,
+                        bottom:
+                            index == widget.currentIndex ? 0 : size.width * .02,
                       ),
                       width: size.width * .32 / listOfIcons.length,
-                      height: index == widget.currentIndex
-                          ? size.width * .014
-                          : 0,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF89F8C6),
-                        borderRadius: BorderRadius.vertical(
+                      height:
+                          index == widget.currentIndex ? size.width * .014 : 0,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: const BorderRadius.vertical(
                           bottom: Radius.circular(10),
                         ),
                       ),
@@ -79,8 +79,8 @@ class _MenuState extends State<Menu> {
                       listOfIcons[index],
                       size: size.width * .06,
                       color: index == widget.currentIndex
-                          ?const  Color(0xFF89F8C6)
-                          : Colors.black38,
+                          ? Theme.of(context).colorScheme.primaryContainer
+                          : Theme.of(context).colorScheme.outline,
                     ),
                     SizedBox(height: size.width * .02),
                   ],
@@ -93,4 +93,3 @@ class _MenuState extends State<Menu> {
     );
   }
 }
-

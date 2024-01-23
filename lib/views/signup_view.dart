@@ -1,6 +1,6 @@
 import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
-import 'package:donative/app/user_auth/button_widget.dart';
+import 'package:donative/app/features/button_widget.dart';
 import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/user_auth/firebase_auth_services.dart';
 import 'package:donative/views/login_view.dart';
@@ -26,10 +26,10 @@ class _SignupViewState extends State<SignupView> {
       "phone": _phoneController.text,
       "email": _emailController.text,
       "uid": FirebaseAuth.instance.currentUser!.uid,
-      "DOB": "",
-      "Address": "",
-      "Gender": "",
-      
+      "dob": "",
+      "address": "",
+      "gender": "",
+      "profilePic": "",
     };
     DatabaseMethods().addUsers(usersData);
   }

@@ -1,8 +1,12 @@
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donative/app/features/form_container_widget.dart';
-import 'package:donative/app/user_auth/button_widget.dart';
+import 'package:donative/app/features/toast.dart';
+import 'package:donative/app/features/button_widget.dart';
 import 'package:donative/app/utils/utils.dart';
+import 'package:donative/views/profile_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -17,8 +21,17 @@ class UpdateProfile extends StatefulWidget {
 }
 
 class _UpdateProfileState extends State<UpdateProfile> {
+  Uint8List? _image;
+
   void selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
+  }
+
+  void saveProfilePic() {
+    
   }
 
   bool isEditingEnabled = false;
@@ -51,11 +64,28 @@ class _UpdateProfileState extends State<UpdateProfile> {
   final _lastNameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
+  final _addressController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _dateTime = null;
+    fetchUserDataFromFirebase();
+  }
+
+  void fetchUserDataFromFirebase() async {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    DocumentSnapshot userSnapshot = await users.doc(userId).get();
+
+    setState(() {
+      _firstNameController.text = userSnapshot['firstName'] ?? '';
+      _lastNameController.text = userSnapshot['lastName'] ?? '';
+      _emailController.text = userSnapshot['email'] ?? '';
+      _phoneController.text = userSnapshot['phone'] ?? '';
+      _dateTime = userSnapshot['dob']?.toDate();
+      genderType = userSnapshot['gender'] ?? '';
+      _addressController.text = userSnapshot['address'] ?? '';
+    });
   }
 
   @override
@@ -85,23 +115,25 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   children: [
                     Stack(
                       children: [
-                        const CircleAvatar(
-                          radius: 55,
-                          backgroundImage: NetworkImage(
-                              'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1705998704~exp=1705999304~hmac=94f210261e42c097bd53ad820556661109367d43ab094dc983e7d943a3b0693e'),
-                        ),
+                        _image != null
+                            ? CircleAvatar(
+                                radius: 55,
+                                backgroundImage: MemoryImage(_image!),
+                              )
+                            : const CircleAvatar(
+                                radius: 65,
+                                backgroundImage: NetworkImage(
+                                    'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1705998704~exp=1705999304~hmac=94f210261e42c097bd53ad820556661109367d43ab094dc983e7d943a3b0693e'),
+                              ),
                         Positioned(
                           bottom: -10,
                           left: 65,
                           child: IconButton(
-                              onPressed: () {},
+                              onPressed: selectImage,
                               icon: const Icon(Icons.add_a_photo)),
                         ),
                       ],
                     ),
-
-                    // Icon(CupertinoIcons.person_crop_circle_fill,
-                    //     size: 100, color: Colors.grey[400]),
                     Row(
                       children: [
                         const Text(
@@ -228,7 +260,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     const SizedBox(height: 10),
                     FormContainerWidget(
                         labelText: "Address",
-                        controller: _phoneController,
+                        controller: _addressController,
                         isPasswordField: false,
                         textInputType: TextInputType.streetAddress,
                         isEnabled: isEditingEnabled,
@@ -240,7 +272,36 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     const SizedBox(
                       height: 15,
                     ),
-                    ButtonWidget(onTap: () {}, buttonText: "Update Profile"),
+                    ButtonWidget(
+                        onTap: () {
+                          CollectionReference users =
+                              FirebaseFirestore.instance.collection('users');
+
+                          String userId =
+                              FirebaseAuth.instance.currentUser!.uid;
+
+                          users.doc(userId).update({
+                            'firstName': _firstNameController.text,
+                            'lastName': _lastNameController.text,
+                            'email': _emailController.text,
+                            'phone': _phoneController.text,
+                            'dob': _dateTime,
+                            'gender': genderType,
+                            'address': _addressController.text,
+                            // Add other fields as needed
+                          }).then((value) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ProfilePage()),
+                            );
+                            showToast(message: 'Profile updated successfully!');
+                          }).catchError((error) {
+                            showToast(
+                                message: 'Failed to update profile: $error');
+                          });
+                        },
+                        buttonText: "Update Profile"),
                   ],
                 ),
               ),

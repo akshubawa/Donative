@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donative/app/profile_menu/update_profile.dart';
-import 'package:donative/app/user_auth/button_widget.dart';
+import 'package:donative/app/features/button_widget.dart';
 import 'package:donative/views/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

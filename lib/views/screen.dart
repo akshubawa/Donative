@@ -40,25 +40,22 @@ class _ScreenState extends State<Screen> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-
-    return SafeArea(
-      child: Scaffold(
-          extendBody: true,
-          body: PageView(
-              controller: pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  currentIndex = index;
-                });
-              },
-              children: const [
-                HomeScreen(),
-                ProfilePage(),
-              ]),
-          bottomNavigationBar: Menu(
-              screenWidth: screenWidth,
-              currentIndex: currentIndex,
-              onIconPressed: _onBottomNavBarTapped)),
-    );
+    return Scaffold(
+        extendBody: true,
+        body: PageView(
+            controller: pageController,
+            onPageChanged: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+            children: const [
+              HomeScreen(),
+              ProfilePage(),
+            ]),
+        bottomNavigationBar: Menu(
+            screenWidth: screenWidth,
+            currentIndex: currentIndex,
+            onIconPressed: _onBottomNavBarTapped));
   }
 }

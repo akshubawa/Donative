@@ -1,14 +1,12 @@
 import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
-import 'package:donative/app/user_auth/button_widget.dart';
+import 'package:donative/app/features/button_widget.dart';
 import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/user_auth/firebase_auth_services.dart';
-import 'package:donative/views/profile_page.dart';
 import 'package:donative/views/screen.dart';
 import 'package:donative/views/signup_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final _loginKey = GlobalKey<FormState>();
@@ -191,12 +189,17 @@ class _LoginViewState extends State<LoginView> {
         String? firstName = googleSignInAccount.displayName?.split(' ')[0];
         String? lastName = googleSignInAccount.displayName?.split(' ')[1];
         String? email = googleSignInAccount.email;
+        String? profilePic = googleSignInAccount.photoUrl;
 
         Map<String, dynamic> usersData = {
           "firstName": firstName,
           "lastName": lastName,
           "email": email,
           "uid": FirebaseAuth.instance.currentUser!.uid,
+          "dob": "",
+          "address": "",
+          "gender": "",
+          "profilePic": profilePic,
         };
         DatabaseMethods().addUsers(usersData);
 
