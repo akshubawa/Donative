@@ -1,7 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/user_auth/button_widget.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:donative/app/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 final _profileKey = GlobalKey<FormState>();
@@ -14,6 +17,11 @@ class UpdateProfile extends StatefulWidget {
 }
 
 class _UpdateProfileState extends State<UpdateProfile> {
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+  }
+
+  bool isEditingEnabled = false;
   DateTime? _dateTime;
 
   void _showDatePicker() {
@@ -26,6 +34,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
       setState(() {
         _dateTime = value!;
       });
+    });
+  }
+
+  void toggleEditing() {
+    setState(() {
+      isEditingEnabled = !isEditingEnabled;
     });
   }
 
@@ -69,12 +83,41 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(CupertinoIcons.person_crop_circle_fill,
-                        size: 100, color: Colors.grey[400]),
-                    const Text(
-                      "Update Profile",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    Stack(
+                      children: [
+                        const CircleAvatar(
+                          radius: 55,
+                          backgroundImage: NetworkImage(
+                              'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1705998704~exp=1705999304~hmac=94f210261e42c097bd53ad820556661109367d43ab094dc983e7d943a3b0693e'),
+                        ),
+                        Positioned(
+                          bottom: -10,
+                          left: 65,
+                          child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.add_a_photo)),
+                        ),
+                      ],
+                    ),
+
+                    // Icon(CupertinoIcons.person_crop_circle_fill,
+                    //     size: 100, color: Colors.grey[400]),
+                    Row(
+                      children: [
+                        const Text(
+                          "Update Profile",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                        const SizedBox(width: 10),
+                        CircleAvatar(
+                          radius: 20,
+                          child: IconButton(
+                              onPressed: toggleEditing,
+                              icon: Icon(
+                                  isEditingEnabled ? Icons.save : Icons.edit)),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 15,
@@ -87,18 +130,29 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               labelText: "First Name",
                               controller: _firstNameController,
                               isPasswordField: false,
-                              textInputType: TextInputType.name),
+                              textInputType: TextInputType.name,
+                              isEnabled: isEditingEnabled,
+                              onEnabledChanged: (value) {
+                                setState(() {
+                                  isEditingEnabled = value;
+                                });
+                              }),
                         ),
                         const SizedBox(
                           width: 10,
                         ),
                         Expanded(
                           child: FormContainerWidget(
-                            labelText: "Last Name",
-                            controller: _lastNameController,
-                            isPasswordField: false,
-                            textInputType: TextInputType.name,
-                          ),
+                              labelText: "Last Name",
+                              controller: _lastNameController,
+                              isPasswordField: false,
+                              textInputType: TextInputType.name,
+                              isEnabled: isEditingEnabled,
+                              onEnabledChanged: (value) {
+                                setState(() {
+                                  isEditingEnabled = value;
+                                });
+                              }),
                         ),
                       ],
                     ),
@@ -106,20 +160,30 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       height: 10,
                     ),
                     FormContainerWidget(
-                      labelText: "Email Address",
-                      controller: _emailController,
-                      isPasswordField: false,
-                      textInputType: TextInputType.emailAddress,
-                    ),
+                        labelText: "Email Address",
+                        controller: _emailController,
+                        isPasswordField: false,
+                        textInputType: TextInputType.emailAddress,
+                        isEnabled: isEditingEnabled,
+                        onEnabledChanged: (value) {
+                          setState(() {
+                            isEditingEnabled = value;
+                          });
+                        }),
                     const SizedBox(
                       height: 10,
                     ),
                     FormContainerWidget(
-                      labelText: "Phone Number",
-                      controller: _phoneController,
-                      isPasswordField: false,
-                      textInputType: TextInputType.phone,
-                    ),
+                        labelText: "Phone Number",
+                        controller: _phoneController,
+                        isPasswordField: false,
+                        textInputType: TextInputType.phone,
+                        isEnabled: isEditingEnabled,
+                        onEnabledChanged: (value) {
+                          setState(() {
+                            isEditingEnabled = value;
+                          });
+                        }),
                     const SizedBox(
                       height: 10,
                     ),
@@ -163,11 +227,16 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     ),
                     const SizedBox(height: 10),
                     FormContainerWidget(
-                      labelText: "Address",
-                      controller: _phoneController,
-                      isPasswordField: false,
-                      textInputType: TextInputType.streetAddress,
-                    ),
+                        labelText: "Address",
+                        controller: _phoneController,
+                        isPasswordField: false,
+                        textInputType: TextInputType.streetAddress,
+                        isEnabled: isEditingEnabled,
+                        onEnabledChanged: (value) {
+                          setState(() {
+                            isEditingEnabled = value;
+                          });
+                        }),
                     const SizedBox(
                       height: 15,
                     ),

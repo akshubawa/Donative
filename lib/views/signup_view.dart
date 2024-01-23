@@ -26,6 +26,10 @@ class _SignupViewState extends State<SignupView> {
       "phone": _phoneController.text,
       "email": _emailController.text,
       "uid": FirebaseAuth.instance.currentUser!.uid,
+      "DOB": "",
+      "Address": "",
+      "Gender": "",
+      
     };
     DatabaseMethods().addUsers(usersData);
   }

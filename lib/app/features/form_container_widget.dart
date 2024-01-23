@@ -8,6 +8,9 @@ class FormContainerWidget extends StatefulWidget {
     this.textInputType,
     this.validateInputBox,
     required this.isPasswordField,
+    this.isEnabled,
+    this.isEditing,
+    this.onEnabledChanged,
   });
 
   final String labelText;
@@ -15,16 +18,21 @@ class FormContainerWidget extends StatefulWidget {
   final TextInputType? textInputType;
   final FormFieldValidator<String>? validateInputBox;
   final bool isPasswordField;
+  final bool? isEnabled;
+  final bool? isEditing;
+  final ValueChanged<bool>? onEnabledChanged;
 
   @override
   State<FormContainerWidget> createState() => _FormContainerWidgetState();
 }
 
 class _FormContainerWidgetState extends State<FormContainerWidget> {
+  bool _isEditing = false;
   bool _isHidden = true;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: widget.isEnabled,
       controller: widget.controller,
       keyboardType: widget.textInputType,
       obscureText: widget.isPasswordField == true ? _isHidden : false,
@@ -35,7 +43,9 @@ class _FormContainerWidgetState extends State<FormContainerWidget> {
         ),
         suffix: widget.isPasswordField
             ? InkWell(
-                onTap: _togglePasswordView,
+                onTap: () {
+                  _togglePasswordView;
+                },
                 child: widget.isPasswordField == true
                     ? Icon(_isHidden ? Icons.visibility_off : Icons.visibility)
                     : null,

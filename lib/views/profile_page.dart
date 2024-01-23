@@ -58,7 +58,7 @@ class ProfilePage extends StatelessWidget {
                       const CircleAvatar(
                         radius: 80,
                         backgroundImage: NetworkImage(
-                            "https://media.licdn.com/dms/image/D4D03AQFmS789TcUDOg/profile-displayphoto-shrink_800_800/0/1675710993462?e=1711584000&v=beta&t=KUbap9iQ0hyC47A5z8C_oWEKK2j62T5nK5dfMTF09EQ"),
+                            "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1705998704~exp=1705999304~hmac=94f210261e42c097bd53ad820556661109367d43ab094dc983e7d943a3b0693e"),
                       ),
                       const SizedBox(height: 15),
                       Text(
