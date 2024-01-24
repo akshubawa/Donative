@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:donative/app/profile_menu/update_profile.dart';
+import 'package:donative/app/profile_menu/contact_us_view.dart';
+import 'package:donative/app/profile_menu/update_profile_view.dart';
 import 'package:donative/app/features/button_widget.dart';
 import 'package:donative/views/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -56,7 +57,7 @@ class ProfilePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircleAvatar(
-                        radius: 70,
+                        radius: 65,
                         backgroundImage: userData['profilePic'] != ""
                             ? NetworkImage(userData['profilePic'])
                             : const NetworkImage(
@@ -91,7 +92,15 @@ class ProfilePage extends StatelessWidget {
                   const SizedBox(height: 15),
                   ButtonWidget(onTap: () {}, buttonText: "Settings"),
                   const SizedBox(height: 15),
-                  ButtonWidget(onTap: () {}, buttonText: "Contact Us"),
+                  ButtonWidget(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ContactUsView()),
+                        );
+                      },
+                      buttonText: "Contact Us"),
                   const SizedBox(height: 15),
                   ButtonWidget(onTap: () {}, buttonText: "About Us"),
                   const SizedBox(height: 15),

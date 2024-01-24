@@ -27,7 +27,6 @@ class FormContainerWidget extends StatefulWidget {
 }
 
 class _FormContainerWidgetState extends State<FormContainerWidget> {
-  bool _isEditing = false;
   bool _isHidden = true;
   @override
   Widget build(BuildContext context) {
