@@ -55,10 +55,15 @@ class ProfilePage extends StatelessWidget {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const CircleAvatar(
-                        radius: 80,
-                        backgroundImage: NetworkImage(
-                            "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1705998704~exp=1705999304~hmac=94f210261e42c097bd53ad820556661109367d43ab094dc983e7d943a3b0693e"),
+                      CircleAvatar(
+                        radius: 70,
+                        backgroundImage: userData['profilePic'] != ""
+                            ? NetworkImage(userData['profilePic'])
+                            : const NetworkImage(
+                                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
+                        child: userData['profilePic'] == null
+                            ? const Icon(Icons.person)
+                            : null,
                       ),
                       const SizedBox(height: 15),
                       Text(

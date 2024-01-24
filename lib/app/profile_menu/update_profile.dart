@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
@@ -7,6 +6,7 @@ import 'package:donative/app/features/button_widget.dart';
 import 'package:donative/app/utils/utils.dart';
 import 'package:donative/views/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -21,7 +21,37 @@ class UpdateProfile extends StatefulWidget {
 }
 
 class _UpdateProfileState extends State<UpdateProfile> {
+  String? _profilePicUrl;
   Uint8List? _image;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<String> saveImage({required Uint8List file}) async {
+    try {
+      String imageUrl = await (String childName, Uint8List file) async {
+        try {
+          Reference ref = _storage.ref().child(childName);
+          UploadTask uploadTask = ref.putData(file);
+          TaskSnapshot snapshot = await uploadTask;
+          String downloadUrl = await snapshot.ref.getDownloadURL();
+          return downloadUrl;
+        } catch (error) {
+          showToast(message: 'Error uploading image to storage: $error');
+          throw error;
+        }
+      }('profileImage', file);
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+
+      await _firestore.collection('users').doc(userId).update({
+        'profilePic': imageUrl,
+      });
+
+      return "Success";
+    } catch (error) {
+      showToast(message: 'Error saving image to Server: $error');
+      return "Some Error Occurred: $error";
+    }
+  }
 
   void selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -30,8 +60,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
     });
   }
 
-  void saveProfilePic() {
-    
+  void saveProfile() async {
+    String resp = await saveImage(file: _image!);
+    showToast(message: resp);
   }
 
   bool isEditingEnabled = false;
@@ -41,7 +72,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2023),
+      firstDate: DateTime(1900),
       lastDate: DateTime(2050),
     ).then((value) {
       setState(() {
@@ -85,6 +116,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       _dateTime = userSnapshot['dob']?.toDate();
       genderType = userSnapshot['gender'] ?? '';
       _addressController.text = userSnapshot['address'] ?? '';
+      _profilePicUrl = userSnapshot['profilePic'];
     });
   }
 
@@ -117,20 +149,29 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       children: [
                         _image != null
                             ? CircleAvatar(
-                                radius: 55,
+                                radius: 65,
                                 backgroundImage: MemoryImage(_image!),
                               )
-                            : const CircleAvatar(
-                                radius: 65,
-                                backgroundImage: NetworkImage(
-                                    'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1705998704~exp=1705999304~hmac=94f210261e42c097bd53ad820556661109367d43ab094dc983e7d943a3b0693e'),
-                              ),
+                            : _profilePicUrl != null
+                                ? CircleAvatar(
+                                    radius: 60,
+                                    backgroundImage: NetworkImage(
+                                      _profilePicUrl!,
+                                    ),
+                                  )
+                                : const CircleAvatar(
+                                    radius: 60,
+                                    backgroundImage: NetworkImage(
+                                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")),
                         Positioned(
-                          bottom: -10,
-                          left: 65,
+                          bottom: -15,
+                          left: 70,
                           child: IconButton(
                               onPressed: selectImage,
-                              icon: const Icon(Icons.add_a_photo)),
+                              icon: const Icon(
+                                Icons.add_a_photo,
+                                size: 30,
+                              )),
                         ),
                       ],
                     ),
@@ -152,7 +193,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       ],
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 30,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -274,6 +315,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     ),
                     ButtonWidget(
                         onTap: () {
+                          saveProfile();
                           CollectionReference users =
                               FirebaseFirestore.instance.collection('users');
 

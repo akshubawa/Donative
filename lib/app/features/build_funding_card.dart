@@ -41,7 +41,7 @@ class BuildFundingCard extends StatelessWidget {
                 ),
                 child: Image.network(
                   imageUrl,
-                  height: 350,
+                  height: 180,
                   width: double.maxFinite,
                   fit: BoxFit.cover,
                 ),

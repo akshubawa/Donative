@@ -28,12 +28,12 @@ class _MenuState extends State<Menu> {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: widget.screenWidth,
-      height: widget.screenWidth * 0.11,
+      height: widget.screenWidth * 0.18,
       color: Colors.transparent,
       child: Center(
         child: Container(
           width: widget.screenWidth * 0.65,
-          height: widget.screenWidth * 0.1,
+          height: widget.screenWidth * 0.15,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -43,7 +43,7 @@ class _MenuState extends State<Menu> {
                 offset: const Offset(0, 10),
               )
             ],
-            color: Colors.white,
+            color: Colors.white.withOpacity(0.8),
             borderRadius: BorderRadius.circular(50),
           ),
           child: Row(
