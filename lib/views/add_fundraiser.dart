@@ -6,6 +6,7 @@ import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
 import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/utils/pickImageUtility.dart';
+import 'package:donative/views/home_screen.dart';
 import 'package:donative/views/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -98,6 +99,8 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
       "mobileNumber": _phoneController.text,
       "address": _addressController.text,
       "uid": FirebaseAuth.instance.currentUser!.uid,
+      "createdAt": DateTime.now().millisecondsSinceEpoch.toString(),
+      "isApproved": false,
     };
     DatabaseMethods().addFundraisers(fundraisersData);
   }
@@ -260,6 +263,15 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
                         validateInputBox: validateInputBox,
                       ),
                       const SizedBox(height: 15),
+                      Text(
+                        "NOTE: Your fundraiser will be reviewed by our team and will be approved within 24 hours.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.secondary),
+                      ),
+                      const SizedBox(height: 15),
                       ButtonWidget(
                         onTap: () {
                           if (_addFundraiserKey.currentState != null &&
@@ -269,10 +281,11 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const ProfilePage()),
+                                    builder: (context) => const HomeScreen()),
                               );
                               showToast(
-                                  message: "Fundraiser added successfully",
+                                  message:
+                                      "Fundraiser request sent successfully",
                                   context: context);
                             });
                           } else {

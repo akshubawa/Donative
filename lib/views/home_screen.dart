@@ -54,7 +54,10 @@ class HomeScreen extends StatelessWidget {
               height: 8,
             ),
             StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('fundraisers').snapshots(),  
+              stream: FirebaseFirestore.instance
+                  .collection('fundraisers')
+                  .where('isApproved', isEqualTo: true)
+                  .snapshots(),
               builder: (context, snapshot) {
                 // print("SNAPSHOT CONNECTION STATE: $snapshot.connectionState");
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -70,8 +73,11 @@ class HomeScreen extends StatelessWidget {
                     child: Text('No fundraisers available'),
                   );
                 } else {
-                  final fundraisers = snapshot.data!.docs.map((doc) => Fundraiser.fromJson(doc.data() as Map<String, dynamic>)).toList();
-                    return Expanded(
+                  final fundraisers = snapshot.data!.docs
+                      .map((doc) => Fundraiser.fromJson(
+                          doc.data() as Map<String, dynamic>))
+                      .toList();
+                  return Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         final fundraiser = fundraisers[index];
