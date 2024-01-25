@@ -29,6 +29,9 @@ class Fundraiser {
   String image;
   double raisedAmount;
   double totalAmount;
+  String? hospitalName;
+  String? mobileNumber;
+  String? address;
 
   Fundraiser({
     required this.title,
@@ -37,6 +40,9 @@ class Fundraiser {
     required this.image,
     required this.raisedAmount,
     required this.totalAmount,
+    this.hospitalName,
+    this.mobileNumber,
+    this.address,
   });
 
   factory Fundraiser.fromJson(Map<String, dynamic> json) {
@@ -47,6 +53,9 @@ class Fundraiser {
       image: json['image'] as String,
       raisedAmount: (json['raisedAmount'] as num).toDouble(),
       totalAmount: (json['totalAmount'] as num).toDouble(),
+      hospitalName: json['hospitalName'] as String?,
+      mobileNumber: json['mobileNumber'] as String?,
+      address: json['address'] as String?,
     );
   }
 
@@ -57,34 +66,13 @@ class Fundraiser {
       'inititor': initiator,
       'image': image,
       'raisedAmount': raisedAmount,
-      'totalAmount': totalAmount
+      'totalAmount': totalAmount,
+      'hospitalName': hospitalName,
+      'mobileNumber': mobileNumber,
+      'address': address,
     };
   }
 }
-
-// class Description {
-//   String initiator;
-//   String description;
-
-//   Description({
-//     required this.initiator,
-//     required this.description,
-//   });
-
-//   factory Description.fromJson(Map<String, dynamic> json) {
-//     return Description(
-//       initiator: json['initiator'] as String,
-//       description: json['description'] as String,
-//     );
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'initiator': initiator,
-//       'description': description,
-//     };
-//   }
-// }
 
 FundraiserData fundraiserDataFromJson(String str) {
   final jsonData = json.decode(str) as Map<String, dynamic>;

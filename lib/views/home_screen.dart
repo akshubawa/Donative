@@ -85,9 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 } else {
                   final fundraisers = snapshot.data as List<Fundraiser>;
-                  return SizedBox(
-                    width: MediaQuery.sizeOf(context).width,
-                    height: MediaQuery.sizeOf(context).height * 0.85,
+                  return Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         final fundraiser = fundraisers[index];

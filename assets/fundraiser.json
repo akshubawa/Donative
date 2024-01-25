@@ -6,7 +6,10 @@
       "initiator": "Mr. Ram Mohan Joshi",
       "image": "https://img.freepik.com/free-photo/sick-asian-man-sitting-chair-side-view_23-2149870287.jpg?w=1060&t=st=1706010608~exp=1706011208~hmac=262347006e00fe945acafe9ef3f3e7133b7aa6a73654bb97e538c474762e5bd0",
       "raisedAmount": 300,
-      "totalAmount": 1000
+      "totalAmount": 1000,
+      "hospitalName": "City Hospital",
+      "mobileNumber": "1234567890",
+      "address": "23A, Park Street, Kolkata, West Bengal, 700016"
     },
     {
       "title": "Liver Transplant Funding",
@@ -14,7 +17,10 @@
       "initiator": "Mrs. Geeta Rawat",
       "image": "https://img.freepik.com/free-photo/doctor-holding-patient-medium-shot_23-2148934321.jpg?w=1060&t=st=1706010577~exp=1706011177~hmac=02b4904ce2b76d454e9efaee647706e575794f1c24b3cc41462bb9bff9ed1a2e",
       "raisedAmount": 2500,
-      "totalAmount": 10000
+      "totalAmount": 10000,
+      "hospitalName": "LifeCare Hospital",
+      "mobileNumber": "2345678901",
+      "address": "12, Park Circus, Kolkata, West Bengal, 700017"
     },
     {
       "title": "Heart Surgery Funding",
@@ -22,7 +28,10 @@
       "initiator": "Mr. Manohar Kumar",
       "image": "https://img.freepik.com/free-photo/happy-nurse-holding-elderly-man-hand-wheelchair-garden-nursing-home_554837-197.jpg?w=1060&t=st=1706010552~exp=1706011152~hmac=a7110654e04540453d57ee6c4ce537cafedfad38fd93d0648e526ba8e38c585d",
       "raisedAmount": 1500,
-      "totalAmount": 5000
+      "totalAmount": 5000,
+      "hospitalName": "HeartCare Hospital",
+      "mobileNumber": "3456789012",
+      "address": "8/1A, Diamond Harbour Road, Kolkata, West Bengal, 700027"
     },
     {
       "title": "Kidney Transplant Funding",
@@ -30,7 +39,10 @@
       "initiator": "Mr. Taarak Mehta",
       "image": "https://img.freepik.com/free-photo/attractive-asian-woman-nurse-doctor-working-with-smiling-freshness-together-takecare-ill-old-senior-patient-hospital_609648-2278.jpg?w=1060&t=st=1706009907~exp=1706010507~hmac=9e1aa2be3022675684bce3ee45fb009659649c6c08cc979a6d1e928b817ba8f1",
       "raisedAmount": 2000,
-      "totalAmount": 8000
+      "totalAmount": 8000,
+      "hospitalName": "KidneyCare Hospital",
+      "mobileNumber": "4567890123",
+      "address": "10A, Hospital Street, Kolkata, West Bengal, 700073"
     },
     {
       "title": "Lung Disease Treatment Funding",
@@ -38,7 +50,10 @@
       "initiator": "Mr. Ramesh Kumar",
       "image": "https://img.freepik.com/free-photo/senior-man-breathing-with-special-equipment-hospital_23-2149011302.jpg?w=1060&t=st=1706009929~exp=1706010529~hmac=228b16f022a8a6225a183c16c617cc1c6464a656874c4b5deb0e13451749755b",
       "raisedAmount": 1200,
-      "totalAmount": 4000
+      "totalAmount": 4000,
+      "hospitalName": "LungCare Hospital",
+      "mobileNumber": "5678901234",
+      "address": "5, Diamond Harbour Road, Kolkata, West Bengal, 700023"
     },
     {
       "title": "Diabetes Research Funding",
@@ -46,7 +61,10 @@
       "initiator": "Mrs. Sunita Sharma",
       "image": "https://img.freepik.com/free-photo/senior-woman-talking-with-her-doctor_23-2148962385.jpg?w=1060&t=st=1706010030~exp=1706010630~hmac=b5617a375b00cd736a1915be6c3254dfa92f945508f8fe30f44298aa40e4e762",
       "raisedAmount": 1800,
-      "totalAmount": 6000
+      "totalAmount": 6000,
+      "hospitalName": "ResearchCare Hospital",
+      "mobileNumber": "6789012345",
+      "address": "25, Park Street, Kolkata, West Bengal, 700020"
     },
     {
       "title": "Alzheimer's Care Funding",
@@ -54,7 +72,10 @@
       "initiator": "Mr. Rakesh Singh",
       "image": "https://img.freepik.com/free-photo/young-man-being-ill-hospital-bed_23-2149017252.jpg?w=1060&t=st=1706009992~exp=1706010592~hmac=54a3d84a98d8a7ff4d784663f3ec2160be8badb435f5b165956667f466a796d7",
       "raisedAmount": 2200,
-      "totalAmount": 7000
+      "totalAmount": 7000,
+      "hospitalName": "MemoryCare Hospital",
+      "mobileNumber": "7890123456",
+      "address": "15, Park Street, Kolkata, West Bengal, 700019"
     },
     {
       "title": "Spinal Cord Injury Treatment Funding",
@@ -62,7 +83,10 @@
       "initiator": "Miss. Ritu Singh",
       "image": "https://img.freepik.com/free-photo/medium-shot-nurse-doctor-checking-patient_23-2148973496.jpg?w=1060&t=st=1706010072~exp=1706010672~hmac=e995017419f9c6eb6a45bb17fadb8415c30d2b9922f93ce194180490d57caa99",
       "raisedAmount": 2700,
-      "totalAmount": 9000
+      "totalAmount": 9000,
+      "hospitalName": "SpinalCare Hospital",
+      "mobileNumber": "8901234567",
+      "address": "20, Park Street, Kolkata, West Bengal, 700018"
     },
     {
       "title": "Rare Disease Treatment Funding",
@@ -70,7 +94,10 @@
       "initiator": "Mr. Manoj Kumar",
       "image": "https://img.freepik.com/free-photo/doctor-helping-patient-during-rehabilitation_23-2150321564.jpg?w=1060&t=st=1706010098~exp=1706010698~hmac=c154c594d744643a52d7d5644318b3f45d58db7913d90a0affec5737e6b008bc",
       "raisedAmount": 1900,
-      "totalAmount": 7000
+      "totalAmount": 7000,
+      "hospitalName": "RareCare Hospital",
+      "mobileNumber": "9012345678",
+      "address": "30, Park Street, Kolkata, West Bengal, 700021"
     },
     {
       "title": "Mental Health Awareness Funding",
@@ -78,7 +105,10 @@
       "initiator": "Mind Matters Organization",
       "image": "https://img.freepik.com/free-photo/front-view-female-doctors-patient_23-2149844600.jpg?w=1060&t=st=1706010129~exp=1706010729~hmac=07857b8c6835d06be6a5eef623d3aec43575ad77e580f82fea2d33d19636a3e7",
       "raisedAmount": 1400,
-      "totalAmount": 5000
+      "totalAmount": 5000,
+      "hospitalName": "MindCare Hospital",
+      "mobileNumber": "9876543210",
+      "address": "40, Park Street, Kolkata, West Bengal, 700022"
     }
   ]
 }

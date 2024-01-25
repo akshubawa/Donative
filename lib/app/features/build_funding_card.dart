@@ -33,11 +33,14 @@ class BuildFundingCard extends StatelessWidget {
                   topLeft: Radius.circular(10.0),
                   topRight: Radius.circular(10.0),
                 ),
-                child: Image.network(
-                  fundraiser.image,
-                  height: 180,
-                  width: double.maxFinite,
-                  fit: BoxFit.cover,
+                child: Hero(
+                  tag: fundraiser.image,
+                  child: Image.network(
+                    fundraiser.image,
+                    height: 180,
+                    width: double.maxFinite,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Padding(
