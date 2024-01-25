@@ -1,26 +1,20 @@
+import 'package:donative/app/models/fundraiser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 
 class BuildFundingCard extends StatelessWidget {
   const BuildFundingCard({
     super.key,
-    required this.title,
-    required this.initiator,
-    required this.imageUrl,
-    required this.raisedAmount,
-    required this.totalAmount,
+    required this.fundraiser,
   });
 
-  final String title;
-  final String initiator;
-  final String imageUrl;
-  final double raisedAmount;
-  final double totalAmount;
+  final Fundraiser fundraiser;
 
   @override
   Widget build(BuildContext context) {
     // Calculate the percentage of money raised
-    double progressPercentage = ((raisedAmount / totalAmount) * 100);
+    double progressPercentage =
+        ((fundraiser.raisedAmount / fundraiser.totalAmount) * 100);
 
     return Padding(
       padding:
@@ -40,7 +34,7 @@ class BuildFundingCard extends StatelessWidget {
                   topRight: Radius.circular(10.0),
                 ),
                 child: Image.network(
-                  imageUrl,
+                  fundraiser.image,
                   height: 180,
                   width: double.maxFinite,
                   fit: BoxFit.cover,
@@ -52,7 +46,7 @@ class BuildFundingCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      title,
+                      fundraiser.title,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -60,7 +54,7 @@ class BuildFundingCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Initiated by: $initiator',
+                      'Initiated by: ${fundraiser.initiator}',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.outline,
                       ),
@@ -72,14 +66,14 @@ class BuildFundingCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Raised: ₹${raisedAmount.toInt()}',
+                            'Raised: ₹${fundraiser.raisedAmount.toInt()}',
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Text(
-                            'Total: ₹${totalAmount.toInt()}',
+                            'Total: ₹${fundraiser.totalAmount.toInt()}',
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
