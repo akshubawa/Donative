@@ -9,4 +9,11 @@ class DatabaseMethods {
         .doc(firebaseUser!.uid)
         .set(usersInfoMap);
   }
+
+  Future addFundraisers(Map<String, dynamic> fundraisersInfoMap) async {
+    return await FirebaseFirestore.instance
+        .collection("fundraisers")
+        .doc()
+        .set(fundraisersInfoMap);
+  }
 }

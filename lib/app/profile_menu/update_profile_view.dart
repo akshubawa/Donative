@@ -25,6 +25,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   Uint8List? _image;
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  String userId = FirebaseAuth.instance.currentUser!.uid;
 
   Future<String> saveImage({required Uint8List file}) async {
     try {
@@ -39,8 +40,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
           showToast(message: 'Error uploading image to storage: $error');
           throw error;
         }
-      }('profileImage', file);
-      String userId = FirebaseAuth.instance.currentUser!.uid;
+      }('profileImage_$userId', file);
 
       await _firestore.collection('users').doc(userId).update({
         'profilePic': imageUrl,

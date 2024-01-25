@@ -28,78 +28,82 @@ class FundraiserDetailView extends StatelessWidget {
             children: [
               Card(
                 // BACKGROUND COLOR OF CARD
-                color: Theme.of(context).colorScheme.secondary,
-                child: Column(
-                  children: [
-                    Hero(
-                      tag: fundraiser.image,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: CachedNetworkImage(
-                          cacheKey: fundraiser.image,
-                          imageUrl: fundraiser.image,
-                          placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        const Text("Raised Amount: ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            )),
-                        Text(
-                          fundraiser.raisedAmount.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
+                color: Theme.of(context).colorScheme.tertiaryContainer,
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Hero(
+                        tag: fundraiser.image,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: CachedNetworkImage(
+                            cacheKey: fundraiser.image,
+                            imageUrl: fundraiser.image,
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
                           ),
                         ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const Text("Total Amount: ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            )),
-                        Text(
-                          fundraiser.totalAmount.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    FAProgressBar(
-                      currentValue: progressPercentage,
-                      displayText: '%',
-                      displayTextStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                        fontWeight: FontWeight.w500,
                       ),
-                      animatedDuration: const Duration(milliseconds: 800),
-                      backgroundColor: Theme.of(context).colorScheme.outline,
-                      progressColor:
-                          Theme.of(context).colorScheme.primaryContainer,
-                      size: 20,
-                    ),
-                    const SizedBox(height: 10),
-                    ButtonWidget(onTap: () {}, buttonText: "DONATE NOW"),
-                  ],
+                      Row(
+                        children: [
+                          const Text("Raised Amount: ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              )),
+                          Text(
+                            fundraiser.raisedAmount.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text("Total Amount: ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              )),
+                          Text(
+                            fundraiser.totalAmount.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      FAProgressBar(
+                        currentValue: progressPercentage,
+                        displayText: '%',
+                        displayTextStyle: TextStyle(
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        animatedDuration: const Duration(milliseconds: 800),
+                        backgroundColor: Theme.of(context).colorScheme.outline,
+                        progressColor:
+                            Theme.of(context).colorScheme.primaryContainer,
+                        size: 20,
+                      ),
+                      const SizedBox(height: 10),
+                      ButtonWidget(onTap: () {}, buttonText: "DONATE NOW"),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
@@ -134,7 +138,7 @@ class FundraiserDetailView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text("CONTCT DETAILS",
+              const Text("CONTACT DETAILS",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,

@@ -32,6 +32,7 @@ class Fundraiser {
   String? hospitalName;
   String? mobileNumber;
   String? address;
+  String uid;
 
   Fundraiser({
     required this.title,
@@ -43,6 +44,7 @@ class Fundraiser {
     this.hospitalName,
     this.mobileNumber,
     this.address,
+    required this.uid,
   });
 
   factory Fundraiser.fromJson(Map<String, dynamic> json) {
@@ -56,6 +58,7 @@ class Fundraiser {
       hospitalName: json['hospitalName'] as String?,
       mobileNumber: json['mobileNumber'] as String?,
       address: json['address'] as String?,
+      uid: json['uid'] as String,
     );
   }
 
@@ -70,6 +73,7 @@ class Fundraiser {
       'hospitalName': hospitalName,
       'mobileNumber': mobileNumber,
       'address': address,
+      'uid': uid,
     };
   }
 }

@@ -1,27 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donative/app/features/build_funding_card.dart';
 import 'package:donative/app/models/fundraiser.dart';
 import 'package:donative/views/fundraiser_detail_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  Future<List<Fundraiser>> loadFundraisers() async {
-    final rawFundraisers =
-        await rootBundle.loadString("assets/fundraiser.json");
-    // print("RAW FUNDRAISERS: $rawFundraisers");
-    await Future.delayed(const Duration(seconds: 1));
-    final fundraisers = fundraiserDataFromJson(rawFundraisers);
-    // print("FUNDRAISERS: $fundraisers");
-    return fundraisers.fundraisers;
-  }
-
+  // Future<List<Fundraiser>> loadFundraisers() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,8 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 8,
             ),
-            FutureBuilder<List<Fundraiser>>(
-              future: loadFundraisers(),
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection('fundraisers').snapshots(),  
               builder: (context, snapshot) {
                 // print("SNAPSHOT CONNECTION STATE: $snapshot.connectionState");
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -84,8 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text('No fundraisers available'),
                   );
                 } else {
-                  final fundraisers = snapshot.data as List<Fundraiser>;
-                  return Expanded(
+                  final fundraisers = snapshot.data!.docs.map((doc) => Fundraiser.fromJson(doc.data() as Map<String, dynamic>)).toList();
+                    return Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         final fundraiser = fundraisers[index];

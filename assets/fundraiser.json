@@ -9,7 +9,8 @@
       "totalAmount": 1000,
       "hospitalName": "City Hospital",
       "mobileNumber": "1234567890",
-      "address": "23A, Park Street, Kolkata, West Bengal, 700016"
+      "address": "23A, Park Street, Kolkata, West Bengal, 700016",
+      "uid": "GPeT0hOtrWZQ9IcNiX2vGQixAIY2"
     },
     {
       "title": "Liver Transplant Funding",
@@ -20,10 +21,11 @@
       "totalAmount": 10000,
       "hospitalName": "LifeCare Hospital",
       "mobileNumber": "2345678901",
-      "address": "12, Park Circus, Kolkata, West Bengal, 700017"
+      "address": "12, Park Circus, Kolkata, West Bengal, 700017",
+      "uid": "K2EVD9bKgrgQgMzcRKJnJQSVhrH3"
     },
     {
-      "title": "Heart Surgery Funding",
+      "title": "`Heart Surgery Funding`",
       "description": "Mr. Kumar requires heart surgery and is seeking financial support to afford the treatment.",
       "initiator": "Mr. Manohar Kumar",
       "image": "https://img.freepik.com/free-photo/happy-nurse-holding-elderly-man-hand-wheelchair-garden-nursing-home_554837-197.jpg?w=1060&t=st=1706010552~exp=1706011152~hmac=a7110654e04540453d57ee6c4ce537cafedfad38fd93d0648e526ba8e38c585d",
@@ -31,7 +33,8 @@
       "totalAmount": 5000,
       "hospitalName": "HeartCare Hospital",
       "mobileNumber": "3456789012",
-      "address": "8/1A, Diamond Harbour Road, Kolkata, West Bengal, 700027"
+      "address": "8/1A, Diamond Harbour Road, Kolkata, West Bengal, 700027",
+      "uid": "UaPjfMrqfdawnkcH1smiaXfXdQ62"
     },
     {
       "title": "Kidney Transplant Funding",
@@ -42,7 +45,8 @@
       "totalAmount": 8000,
       "hospitalName": "KidneyCare Hospital",
       "mobileNumber": "4567890123",
-      "address": "10A, Hospital Street, Kolkata, West Bengal, 700073"
+      "address": "10A, Hospital Street, Kolkata, West Bengal, 700073",
+      "uid": "qtAqNYdxwDcoAuO9Gd6KgTTxNgf2"
     },
     {
       "title": "Lung Disease Treatment Funding",
@@ -53,7 +57,8 @@
       "totalAmount": 4000,
       "hospitalName": "LungCare Hospital",
       "mobileNumber": "5678901234",
-      "address": "5, Diamond Harbour Road, Kolkata, West Bengal, 700023"
+      "address": "5, Diamond Harbour Road, Kolkata, West Bengal, 700023",
+      "uid": "GPeT0hOtrWZQ9IcNiX2vGQixAIY2"
     },
     {
       "title": "Diabetes Research Funding",
@@ -64,7 +69,8 @@
       "totalAmount": 6000,
       "hospitalName": "ResearchCare Hospital",
       "mobileNumber": "6789012345",
-      "address": "25, Park Street, Kolkata, West Bengal, 700020"
+      "address": "25, Park Street, Kolkata, West Bengal, 700020",
+      "uid": "K2EVD9bKgrgQgMzcRKJnJQSVhrH3"
     },
     {
       "title": "Alzheimer's Care Funding",
@@ -75,7 +81,8 @@
       "totalAmount": 7000,
       "hospitalName": "MemoryCare Hospital",
       "mobileNumber": "7890123456",
-      "address": "15, Park Street, Kolkata, West Bengal, 700019"
+      "address": "15, Park Street, Kolkata, West Bengal, 700019",
+      "uid": "UaPjfMrqfdawnkcH1smiaXfXdQ62"
     },
     {
       "title": "Spinal Cord Injury Treatment Funding",
@@ -86,7 +93,8 @@
       "totalAmount": 9000,
       "hospitalName": "SpinalCare Hospital",
       "mobileNumber": "8901234567",
-      "address": "20, Park Street, Kolkata, West Bengal, 700018"
+      "address": "20, Park Street, Kolkata, West Bengal, 700018",
+      "uid": "qtAqNYdxwDcoAuO9Gd6KgTTxNgf2"
     },
     {
       "title": "Rare Disease Treatment Funding",
@@ -97,7 +105,8 @@
       "totalAmount": 7000,
       "hospitalName": "RareCare Hospital",
       "mobileNumber": "9012345678",
-      "address": "30, Park Street, Kolkata, West Bengal, 700021"
+      "address": "30, Park Street, Kolkata, West Bengal, 700021",
+      "uid": "UaPjfMrqfdawnkcH1smiaXfXdQ62"
     },
     {
       "title": "Mental Health Awareness Funding",
@@ -108,7 +117,8 @@
       "totalAmount": 5000,
       "hospitalName": "MindCare Hospital",
       "mobileNumber": "9876543210",
-      "address": "40, Park Street, Kolkata, West Bengal, 700022"
+      "address": "40, Park Street, Kolkata, West Bengal, 700022",
+      "uid": "GPeT0hOtrWZQ9IcNiX2vGQixAIY2"
     }
   ]
 }

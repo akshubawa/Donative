@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donative/app/profile_menu/contact_us_view.dart';
 import 'package:donative/app/profile_menu/update_profile_view.dart';
 import 'package:donative/app/features/button_widget.dart';
+import 'package:donative/views/add_fundraiser.dart';
 import 'package:donative/views/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -80,6 +81,17 @@ class ProfilePage extends StatelessWidget {
                   const SizedBox(height: 15),
                   ButtonWidget(onTap: () {}, buttonText: "My Donations"),
                   const SizedBox(height: 15),
+                  ButtonWidget(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AddFundraiserView()),
+                        );
+                      },
+                      buttonText: "Add Fundraiser"),
+                  const SizedBox(height: 15),
+                  
                   ButtonWidget(
                       onTap: () {
                         Navigator.push(

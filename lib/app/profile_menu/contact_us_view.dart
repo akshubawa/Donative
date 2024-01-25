@@ -176,6 +176,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                   buttonText: "Send Message",
                 ),
                 const SizedBox(height: 8),
+               
                 Text(
                   "OR",
                   textAlign: TextAlign.center,
