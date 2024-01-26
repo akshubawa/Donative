@@ -16,4 +16,11 @@ class DatabaseMethods {
         .doc()
         .set(fundraisersInfoMap);
   }
+
+   Future addPayments(Map<String, dynamic> paymentsInfoMap) async {
+    return await FirebaseFirestore.instance
+        .collection("payments")
+        .doc()
+        .set(paymentsInfoMap);
+  }
 }
