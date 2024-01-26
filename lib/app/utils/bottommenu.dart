@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
@@ -20,6 +21,8 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   List<IconData> listOfIcons = [
     IconlyBold.home,
+    CupertinoIcons.add_circled_solid,
+    CupertinoIcons.heart_solid,
     IconlyBold.profile,
   ];
 

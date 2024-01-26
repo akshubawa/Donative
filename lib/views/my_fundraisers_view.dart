@@ -2,19 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donative/app/features/build_funding_card.dart';
 import 'package:donative/app/models/fundraiser.dart';
 import 'package:donative/views/fundraiser_detail_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class MyFundraiserView extends StatelessWidget {
+  const MyFundraiserView({super.key});
 
-  // Future<List<Fundraiser>> loadFundraisers() async {
   @override
   Widget build(BuildContext context) {
+    String? currentUserId = FirebaseAuth.instance.currentUser?.uid;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         title: const Text(
-          "Donative",
+          "My Fundraisers",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -27,36 +28,10 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search...',
-                      filled: true,
-                      fillColor: Theme.of(context).colorScheme.surface,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {
-                    // Handle search action
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 8,
-            ),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('fundraisers')
-                  .where('isApproved', isEqualTo: true)
+                  .where('uid', isEqualTo: currentUserId)
                   .snapshots(),
               builder: (context, snapshot) {
                 // print("SNAPSHOT CONNECTION STATE: $snapshot.connectionState");
@@ -70,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                   );
                 } else if (snapshot.data == null) {
                   return const Center(
-                    child: Text('No fundraisers available'),
+                    child: Text('You have no fundraisers yet!'),
                   );
                 } else {
                   final fundraisers = snapshot.data!.docs
@@ -87,12 +62,12 @@ class HomeScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FundraiserDetailView(
-                                    fundraiser: fundraiser),
+                                  fundraiser: fundraiser,
+                                ),
                               ),
                             );
                           },
-                          child: BuildFundingCard(
-                              fundraiser: fundraiser, showStatus: false),
+                          child: BuildFundingCard(fundraiser: fundraiser, showStatus: true),
                         );
                       },
                       itemCount: fundraisers.length,

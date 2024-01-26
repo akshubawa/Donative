@@ -33,6 +33,7 @@ class Fundraiser {
   String? mobileNumber;
   String? address;
   String uid;
+  bool isApproved;
 
   Fundraiser({
     required this.title,
@@ -45,6 +46,7 @@ class Fundraiser {
     this.mobileNumber,
     this.address,
     required this.uid,
+    required this.isApproved,
   });
 
   factory Fundraiser.fromJson(Map<String, dynamic> json) {
@@ -59,6 +61,7 @@ class Fundraiser {
       mobileNumber: json['mobileNumber'] as String?,
       address: json['address'] as String?,
       uid: json['uid'] as String,
+      isApproved: json['isApproved'] as bool,
     );
   }
 
@@ -74,6 +77,7 @@ class Fundraiser {
       'mobileNumber': mobileNumber,
       'address': address,
       'uid': uid,
+      'isApproved': false,
     };
   }
 }

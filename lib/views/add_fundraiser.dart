@@ -296,6 +296,7 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
                         },
                         buttonText: "Add Fundraiser",
                       ),
+                      const SizedBox(height: 50),
                     ])))));
   }
 }

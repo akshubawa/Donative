@@ -1,5 +1,7 @@
 import 'package:donative/app/utils/bottommenu.dart';
+import 'package:donative/views/add_fundraiser.dart';
 import 'package:donative/views/home_screen.dart';
+import 'package:donative/views/my_fundraisers_view.dart';
 import 'package:donative/views/profile_page.dart';
 import 'package:flutter/material.dart';
 
@@ -51,6 +53,8 @@ class _ScreenState extends State<Screen> {
             },
             children: const [
               HomeScreen(),
+              AddFundraiserView(),
+              MyFundraiserView(),
               ProfilePage(),
             ]),
         bottomNavigationBar: Menu(

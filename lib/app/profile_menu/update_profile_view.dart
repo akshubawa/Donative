@@ -332,11 +332,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             'address': _addressController.text,
                             // Add other fields as needed
                           }).then((value) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ProfilePage()),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => const ProfilePage()),
+                            // );
                             showToast(message: 'Profile updated successfully!');
                           }).catchError((error) {
                             showToast(

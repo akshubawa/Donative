@@ -6,9 +6,11 @@ class BuildFundingCard extends StatelessWidget {
   const BuildFundingCard({
     super.key,
     required this.fundraiser,
+    this.showStatus = false,
   });
 
   final Fundraiser fundraiser;
+  final bool showStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +99,16 @@ class BuildFundingCard extends StatelessWidget {
                       progressColor:
                           Theme.of(context).colorScheme.primaryContainer,
                       size: 20,
-                    )
+                    ),
+                    const SizedBox(height: 8),
+                    if (showStatus)
+                      Text(
+                        'Status: ${fundraiser.isApproved ? 'Approved' : 'Pending'}',
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                   ],
                 ),
               ),
