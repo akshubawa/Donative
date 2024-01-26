@@ -1,23 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donative/app/features/my_donation_card.dart';
+import 'package:donative/app/models/fundraiser.dart';
 import 'package:donative/app/models/payments.dart';
 import 'package:donative/app/models/users.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class MyDonationsView extends StatelessWidget {
+class DonationListView extends StatelessWidget {
   final Payment? payment;
   final Users? user;
-  const MyDonationsView({Key? key, this.payment, this.user}) : super(key: key);
+  final Fundraiser? fundraiser;
+  const DonationListView({Key? key, this.payment, this.user, this.fundraiser})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String? currentUserId = FirebaseAuth.instance.currentUser?.uid;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         title: const Text(
-          "My Donations",
+          "Donations List",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -26,7 +27,7 @@ class MyDonationsView extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "YOUR TOTAL DONATION: ₹${user?.donatedAmount ?? '0'} ",
+              "TOTAL AMOUNT COLLECTED: ₹${fundraiser!.raisedAmount} ",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -38,7 +39,7 @@ class MyDonationsView extends StatelessWidget {
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('payments')
-                  .where('userId', isEqualTo: currentUserId)
+                  .where('fundraiserId', isEqualTo: payment?.fundraiserId)
                   .snapshots(),
               builder: (context, snapshot) {
                 // print("SNAPSHOT CONNECTION STATE: $snapshot.connectionState");
@@ -48,13 +49,13 @@ class MyDonationsView extends StatelessWidget {
                   );
                 } else if (snapshot.hasError) {
                   return Center(
-                    child:
-                        Text('Error loading your donations: ${snapshot.error}'),
+                    child: Text(
+                        'Error loading in donations list: ${snapshot.error}'),
                   );
                 } else if (snapshot.data == null ||
                     snapshot.data!.docs.isEmpty) {
                   return const Center(
-                    child: Text('You have no Donations yet!'),
+                    child: Text('There are Donations yet!'),
                   );
                 } else {
                   final payments = snapshot.data!.docs

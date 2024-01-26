@@ -214,7 +214,7 @@ class _SignupViewState extends State<SignupView> {
           showToast(message: "Account created successfully.", context: context);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const Screen()),
+            MaterialPageRoute(builder: (context) => Screen()),
           );
         }
       } on FirebaseAuthException catch (e) {

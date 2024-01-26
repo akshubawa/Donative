@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FundraiserDetailView(
-                                    fundraiser: fundraiser),
+                                    fundraiser: fundraiser,),
                               ),
                             );
                           },

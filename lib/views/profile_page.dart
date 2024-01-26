@@ -4,13 +4,15 @@ import 'package:donative/app/profile_menu/update_profile_view.dart';
 import 'package:donative/app/features/button_widget.dart';
 import 'package:donative/views/add_fundraiser.dart';
 import 'package:donative/views/login_view.dart';
+import 'package:donative/views/my_donations_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../app/features/string_extension.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+
+  const ProfilePage({Key? key, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +81,16 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 15),
-                  ButtonWidget(onTap: () {}, buttonText: "My Donations"),
+                  ButtonWidget(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const MyDonationsView()),
+                        );
+                      },
+                      buttonText: "My Donations"),
                   const SizedBox(height: 15),
                   ButtonWidget(
                       onTap: () {
@@ -101,14 +112,13 @@ class ProfilePage extends StatelessWidget {
                       },
                       buttonText: "Update Profile"),
                   const SizedBox(height: 15),
-                  ButtonWidget(onTap: () {}, buttonText: "Settings"),
-                  const SizedBox(height: 15),
                   ButtonWidget(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ContactUsView()),
+                              builder: (context) =>
+                                  const ContactUsView()),
                         );
                       },
                       buttonText: "Contact Us"),
