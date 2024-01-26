@@ -20,7 +20,7 @@ class BuildFundingCard extends StatelessWidget {
 
     return Padding(
       padding:
-          const EdgeInsets.only(top: 5.0, bottom: 3.0, left: 16.0, right: 16.0),
+          const EdgeInsets.only(top: 5.0, bottom: 3.0, left: 10.0, right: 14.0),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
