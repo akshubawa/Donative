@@ -33,6 +33,7 @@ class Fundraiser {
   String? mobileNumber;
   String? address;
   String uid;
+  String fundraiserId;
   bool isApproved;
 
   Fundraiser({
@@ -46,6 +47,7 @@ class Fundraiser {
     this.mobileNumber,
     this.address,
     required this.uid,
+    required this.fundraiserId,
     required this.isApproved,
   });
 
@@ -61,6 +63,7 @@ class Fundraiser {
       mobileNumber: json['mobileNumber'] as String?,
       address: json['address'] as String?,
       uid: json['uid'] as String,
+      fundraiserId: json['fundraiserId'] as String,
       isApproved: json['isApproved'] as bool,
     );
   }
@@ -77,6 +80,7 @@ class Fundraiser {
       'mobileNumber': mobileNumber,
       'address': address,
       'uid': uid,
+      'fundraiserId': fundraiserId,
       'isApproved': false,
     };
   }
