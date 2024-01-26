@@ -4,10 +4,16 @@ import 'package:donative/app/models/fundraiser.dart';
 import 'package:donative/views/fundraiser_detail_view.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
-  // Future<List<Fundraiser>> loadFundraisers() async {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +38,11 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextField(
+                    controller: _searchController,
+                    onChanged: (value) {
+                      // Trigger a rebuild with the updated search text
+                      setState(() {});
+                    },
                     decoration: InputDecoration(
                       hintText: 'Search...',
                       filled: true,
@@ -46,6 +57,7 @@ class HomeScreen extends StatelessWidget {
                   icon: const Icon(Icons.search),
                   onPressed: () {
                     // Handle search action
+                    _performSearch();
                   },
                 ),
               ],
@@ -59,7 +71,6 @@ class HomeScreen extends StatelessWidget {
                   .where('isApproved', isEqualTo: true)
                   .snapshots(),
               builder: (context, snapshot) {
-                // print("SNAPSHOT CONNECTION STATE: $snapshot.connectionState");
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator.adaptive(),
@@ -77,25 +88,44 @@ class HomeScreen extends StatelessWidget {
                       .map((doc) => Fundraiser.fromJson(
                           doc.data() as Map<String, dynamic>))
                       .toList();
+
+                  // Filter fundraisers based on search text
+                  final filteredFundraisers = _searchController.text.isEmpty
+                      ? fundraisers
+                      : fundraisers
+                          .where((fundraiser) =>
+                              fundraiser.title.toLowerCase().contains(
+                                  _searchController.text.toLowerCase()) ||
+                              fundraiser.description!.toLowerCase().contains(
+                                  _searchController.text.toLowerCase()))
+                          .toList();
+
                   return Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
-                        final fundraiser = fundraisers[index];
+                        final fundraiser = filteredFundraisers[index];
                         return InkWell(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FundraiserDetailView(
+<<<<<<< HEAD
                                     fundraiser: fundraiser,),
+=======
+                                  fundraiser: fundraiser,
+                                ),
+>>>>>>> bbfe82f87748eab12eedaf0173b99da690b32b7d
                               ),
                             );
                           },
                           child: BuildFundingCard(
-                              fundraiser: fundraiser, showStatus: false),
+                            fundraiser: fundraiser,
+                            showStatus: false,
+                          ),
                         );
                       },
-                      itemCount: fundraisers.length,
+                      itemCount: filteredFundraisers.length,
                     ),
                   );
                 }
@@ -105,5 +135,10 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _performSearch() {
+    FocusScope.of(context).unfocus();
+    print('Search Button Pressed');
   }
 }
