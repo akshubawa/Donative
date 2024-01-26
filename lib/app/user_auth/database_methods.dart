@@ -16,39 +16,4 @@ class DatabaseMethods {
         .doc()
         .set(fundraisersInfoMap);
   }
-
-  Future addPayments(Map<String, dynamic> paymentsInfoMap) async {
-    return await FirebaseFirestore.instance
-        .collection("payments")
-        .doc()
-        .set(paymentsInfoMap);
-  }
-
 }
-
-
-
-
-//                                             CollectionReference fundraisers =
-//                                                 FirebaseFirestore.instance
-//                                                     .collection('fundraisers');
-
-                                         
-                                            
-
-//                                             double raisedAmount =
-//                                                 widget.fundraiser.raisedAmount;
-
-//                                             users.doc(userId).update({
-//                                               'donatedAmount': raisedAmount +
-//                                                   int.parse(
-//                                                       amountController.text),
-//                                             });
-
-//                                             fundraisers
-//                                                 .doc(fundraiserId)
-//                                                 .update({
-//                                               'raisedAmount': FieldValue
-//                                                   .increment(int.parse(
-//                                                       amountController.text)),
-//                                             });

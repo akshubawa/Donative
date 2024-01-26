@@ -5,8 +5,12 @@ import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
 import 'package:donative/app/models/fundraiser.dart';
 import 'package:donative/app/user_auth/database_methods.dart';
+<<<<<<< HEAD
 import 'package:donative/views/screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+=======
+import 'package:donative/views/payment_view.dart';
+>>>>>>> a88a14d922080a3bfbb2dcd9b3dbf8e171f49c58
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,6 +44,7 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
     DatabaseMethods().addPayments(paymentsData);
   }
 
+<<<<<<< HEAD
   updateFundraisersData() async {
     double donationAmount = double.parse(amountController.text);
     double newRaisedAmount = widget.fundraiser.raisedAmount + donationAmount;
@@ -96,6 +101,8 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
     }
   }
 
+=======
+>>>>>>> a88a14d922080a3bfbb2dcd9b3dbf8e171f49c58
   final nameController = TextEditingController();
   final amountController = TextEditingController();
   final upiNumberController = TextEditingController();
@@ -438,17 +445,24 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
                                       TextButton(
                                         onPressed: () {
                                           uploadPaymentsData().then((value) {
+<<<<<<< HEAD
                                             double donatedAmount = double.parse(
                                                 amountController.text);
                                             updateFundraisersData();
                                             updatetUserDonatedAmount(
                                                 donatedAmount);
+=======
+>>>>>>> a88a14d922080a3bfbb2dcd9b3dbf8e171f49c58
                                             Navigator.pop(context);
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
+<<<<<<< HEAD
                                                     const Screen(),
+=======
+                                                    const PaymentView(),
+>>>>>>> a88a14d922080a3bfbb2dcd9b3dbf8e171f49c58
                                               ),
                                             );
                                           });
