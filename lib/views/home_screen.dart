@@ -110,12 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FundraiserDetailView(
-<<<<<<< HEAD
                                     fundraiser: fundraiser,),
-=======
-                                  fundraiser: fundraiser,
-                                ),
->>>>>>> bbfe82f87748eab12eedaf0173b99da690b32b7d
                               ),
                             );
                           },
