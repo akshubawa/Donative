@@ -46,6 +46,7 @@ class FundraiserDetailView extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
                           const Text("Raised Amount: ",
@@ -107,116 +108,107 @@ class FundraiserDetailView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              Card(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          fundraiser.title,
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        fundraiser.title,
+                        style: TextStyle(
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Initiated by: ${fundraiser.initiator}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text("DESCRIPTION",
                           style: TextStyle(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Initiated by: ${fundraiser.initiator}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
                             color: Theme.of(context)
                                 .colorScheme
                                 .onPrimaryContainer,
-                          ),
+                            fontSize: 18,
+                          )),
+                      const SizedBox(height: 4),
+                      Text(
+                        fundraiser.description!,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
-                        const SizedBox(height: 15),
-                        Text("DESCRIPTION",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                              fontSize: 18,
-                            )),
-                        const SizedBox(height: 4),
-                        Text(
-                          fundraiser.description!,
+                      ),
+                      const SizedBox(height: 15),
+                      Text("CONTACT DETAILS",
                           style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                             color: Theme.of(context)
                                 .colorScheme
                                 .onPrimaryContainer,
-                          ),
+                            fontSize: 18,
+                          )),
+                      const SizedBox(height: 4),
+                      Text(
+                        fundraiser.mobileNumber ?? 'Not Available',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
-                        const SizedBox(height: 15),
-                        Text("CONTACT DETAILS",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                              fontSize: 18,
-                            )),
-                        const SizedBox(height: 4),
-                        Text(
-                          fundraiser.mobileNumber ?? 'Not Available',
+                      ),
+                      const SizedBox(height: 15),
+                      Text("HOSPITAL",
                           style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                             color: Theme.of(context)
                                 .colorScheme
                                 .onPrimaryContainer,
-                          ),
+                            fontSize: 18,
+                          )),
+                      const SizedBox(height: 4),
+                      Text(
+                        fundraiser.hospitalName ?? 'Not Available',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
-                        const SizedBox(height: 15),
-                        Text("HOSPITAL",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                              fontSize: 18,
-                            )),
-                        const SizedBox(height: 4),
-                        Text(
-                          fundraiser.hospitalName ?? 'Not Available',
+                      ),
+                      const SizedBox(height: 15),
+                      Text("PATIENT ADDRESS",
                           style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
                             color: Theme.of(context)
                                 .colorScheme
                                 .onPrimaryContainer,
-                          ),
+                          )),
+                      const SizedBox(height: 4),
+                      Text(
+                        fundraiser.address ?? 'Not Available',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
-                        const SizedBox(height: 15),
-                        Text("PATIENT ADDRESS",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                            )),
-                        const SizedBox(height: 4),
-                        Text(
-                          fundraiser.address ?? 'Not Available',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
-                          ),
-                        ),
-                      ]),
-                ),
+                      ),
+                    ]),
               ),
               const SizedBox(height: 10),
             ],

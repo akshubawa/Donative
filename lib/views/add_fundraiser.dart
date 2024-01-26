@@ -8,6 +8,7 @@ import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/utils/pickImageUtility.dart';
 import 'package:donative/views/home_screen.dart';
 import 'package:donative/views/profile_page.dart';
+import 'package:emailjs/emailjs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,6 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
   Uint8List? _image;
 
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String userId = FirebaseAuth.instance.currentUser!.uid;
 
   final _initiatorNameController = TextEditingController();
@@ -38,6 +38,7 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
   final _patientImageController = TextEditingController();
   final _hospitalNameController = TextEditingController();
   final _addressController = TextEditingController();
+  final _emailController = TextEditingController();
 
   @override
   void dispose() {
@@ -49,6 +50,7 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
     _patientImageController.dispose();
     _hospitalNameController.dispose();
     _addressController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -101,8 +103,40 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
       "uid": FirebaseAuth.instance.currentUser!.uid,
       "createdAt": DateTime.now().millisecondsSinceEpoch.toString(),
       "isApproved": false,
+      "email": _emailController.text,
     };
     DatabaseMethods().addFundraisers(fundraisersData);
+  }
+
+  sendEmail() async {
+    String imageUrl = await saveImage(file: _image!);
+    double totalAmount = double.parse(_totalAmountController.text);
+    Map<String, dynamic> templateParams = {
+      "title": _titleController.text,
+      "description": _descriptionController.text,
+      "initiator": _initiatorNameController.text,
+      "image": imageUrl,
+      "totalAmount": totalAmount,
+      "hospitalName": _hospitalNameController.text,
+      "mobileNumber": _phoneController.text,
+      "address": _addressController.text,
+      "email": _emailController.text,
+    };
+
+    try {
+      await EmailJS.send(
+        'service_601pvwc',
+        'template_b6rx0c9',
+        templateParams,
+        const Options(
+          publicKey: 'hzeDuuyqZ7Y2_OaIz',
+          privateKey: '5OnaUwcfT3sfAyEgUno5k',
+        ),
+      );
+      print('SUCCESS!');
+    } catch (error) {
+      print(error.toString());
+    }
   }
 
   @override
@@ -165,7 +199,7 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
                         labelText: "Title of Funding",
                         controller: _titleController,
                         isPasswordField: false,
-                        textInputType: TextInputType.number,
+                        textInputType: TextInputType.text,
                         validateInputBox: validateInputBox,
                       ),
                       const SizedBox(height: 15),
@@ -235,6 +269,14 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
                         labelText: "Contact Number",
                         controller: _phoneController,
                         isPasswordField: false,
+                        textInputType: TextInputType.phone,
+                        validateInputBox: validateInputBox,
+                      ),
+                      const SizedBox(height: 15),
+                      FormContainerWidget(
+                        labelText: "Email Address",
+                        controller: _emailController,
+                        isPasswordField: false,
                         textInputType: TextInputType.text,
                         validateInputBox: validateInputBox,
                       ),
@@ -278,6 +320,7 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
                               _addFundraiserKey.currentState!.validate()) {
                             savePic();
                             uploadFundraisersData().then((value) {
+                              sendEmail();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
