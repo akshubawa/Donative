@@ -1,0 +1,69 @@
+Row(children: [
+                          Text("Transaction ID: ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              )),
+                          Text("1234567890",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ))
+                        ]),
+                        const SizedBox(height: 10),
+                        Row(children: [
+                          const Text("Amount: ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              )),
+                          Text("₹ 1000",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ))
+                        ]),
+                        const SizedBox(height: 10),
+                        Row(children: [
+                          const Text("Date: ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              )),
+                          Text("12/12/2021",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ))
+                        ]),
+                        const SizedBox(height: 10),
+                        Row(children: [
+                          const Text("Time: ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              )),
+                          Text("12:00 PM",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ))
+                        ]),
+                        const SizedBox(height: 10),
+                        Row(children: [
+                          const Text("Status: ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              )),
+                          Text("Success",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ))
+                        ]),
+
+
+Name (Anonymous)
+Upid
+Amount

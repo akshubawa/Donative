@@ -91,7 +91,6 @@ class ProfilePage extends StatelessWidget {
                       },
                       buttonText: "Add Fundraiser"),
                   const SizedBox(height: 15),
-                  
                   ButtonWidget(
                       onTap: () {
                         Navigator.push(
