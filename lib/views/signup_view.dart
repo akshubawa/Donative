@@ -30,6 +30,7 @@ class _SignupViewState extends State<SignupView> {
       "address": "",
       "gender": "",
       "profilePic": "",
+      "donatedAmount": 0,
     };
     DatabaseMethods().addUsers(usersData);
   }

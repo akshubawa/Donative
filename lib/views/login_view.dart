@@ -200,6 +200,7 @@ class _LoginViewState extends State<LoginView> {
           "address": "",
           "gender": "",
           "profilePic": profilePic,
+          "donatedAmount": 0,
         };
         DatabaseMethods().addUsers(usersData);
 

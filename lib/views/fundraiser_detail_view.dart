@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donative/app/features/button_widget.dart';
 import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
 import 'package:donative/app/models/fundraiser.dart';
-import 'package:donative/views/payment_view.dart';
+import 'package:donative/app/user_auth/database_methods.dart';
+import 'package:donative/views/screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,9 +24,81 @@ class FundraiserDetailView extends StatefulWidget {
 
 class _FundraiserDetailViewState extends State<FundraiserDetailView> {
   bool isLoading = false;
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController amountController = TextEditingController();
-  final TextEditingController upiNumberController = TextEditingController();
+
+  String transactionId = DateTime.now().millisecondsSinceEpoch.toString();
+
+  uploadPaymentsData() async {
+    Map<String, dynamic> paymentsData = {
+      "name": nameController.text,
+      "amount": amountController.text,
+      "upiNumber": upiNumberController.text,
+      "fundraiserId": widget.fundraiser.fundraiserId,
+      "userId": widget.fundraiser.uid,
+      "date_time": DateTime.now(),
+      "transactionId": transactionId,
+    };
+    DatabaseMethods().addPayments(paymentsData);
+  }
+
+  updateFundraisersData() async {
+    double donationAmount = double.parse(amountController.text);
+    double newRaisedAmount = widget.fundraiser.raisedAmount + donationAmount;
+
+    WriteBatch batch = FirebaseFirestore.instance.batch();
+    CollectionReference fundraisersRef =
+        FirebaseFirestore.instance.collection('fundraisers');
+
+    QuerySnapshot fundraisersSnapshot = await fundraisersRef.get();
+    List<DocumentSnapshot> fundraisersDocs = fundraisersSnapshot.docs;
+
+    for (DocumentSnapshot fundraiserDoc in fundraisersDocs) {
+      if (fundraiserDoc.id == widget.fundraiser.fundraiserId) {
+        batch
+            .update(fundraiserDoc.reference, {'raisedAmount': newRaisedAmount});
+      }
+    }
+
+    try {
+      await batch.commit();
+      print("Fundraiser data updated successfully");
+    } catch (e) {
+      print("Error updating fundraiser data: $e");
+    }
+  }
+
+  Future<void> updatetUserDonatedAmount(double donationAmount) async {
+    try {
+      // Get the current user's document ID from your authentication system
+      String currentUserId = FirebaseAuth.instance.currentUser!
+          .uid; // Replace with your method to get the current user's ID
+
+      if (currentUserId != null) {
+        DocumentReference userRef =
+            FirebaseFirestore.instance.collection('users').doc(currentUserId);
+        DocumentSnapshot userSnapshot = await userRef.get();
+
+        if (userSnapshot.exists) {
+          double currentDonatedAmount = (userSnapshot.data()
+                  as Map<String, dynamic>?)?['donatedAmount'] ??
+              0;
+          double newDonatedAmount = currentDonatedAmount + donationAmount;
+
+          await userRef.update({'donatedAmount': newDonatedAmount});
+          print('User donatedAmount updated successfully');
+        } else {
+          print('User document does not exist');
+        }
+      } else {
+        print('Current user ID is null');
+      }
+    } catch (e) {
+      print('Error updating user donatedAmount: $e');
+    }
+  }
+
+  final nameController = TextEditingController();
+  final amountController = TextEditingController();
+  final upiNumberController = TextEditingController();
 
   String? validateInputBox(String? value) {
     if (value!.isEmpty) {
@@ -35,12 +110,14 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
   @override
   void initState() {
     super.initState();
-  //   KeyboardVisibilityController().onChange.listen((bool isVisible) {
-  //   if (!isVisible) {
-  //     // Keyboard is hidden, you can close the bottom sheet here
-  //     Navigator.of(context).pop();
-  //   }
-  // });
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    amountController.dispose();
+    upiNumberController.dispose();
+    super.dispose();
   }
 
   @override
@@ -49,7 +126,7 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
         ((widget.fundraiser.raisedAmount / widget.fundraiser.totalAmount) *
             100);
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           title: const Text(
@@ -65,7 +142,7 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
               Card(
                 color: Theme.of(context).colorScheme.tertiaryContainer,
                 child: Container(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                   child: Column(
                     children: [
                       Hero(
@@ -144,112 +221,135 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
                         },
                         buttonText: "DONATE NOW",
                       ),
+                      TextButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(
+                          FontAwesomeIcons.handHoldingMedical,
+                          size: 14,
+                        ),
+                        label: const Text(
+                          "Donation List",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
               const SizedBox(height: 10),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.fundraiser.title,
-                        style: TextStyle(
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Initiated by: ${widget.fundraiser.initiator}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Text("DESCRIPTION",
+              Card(
+                color: Theme.of(context).colorScheme.surface,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.fundraiser.title,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
                             color: Theme.of(context)
                                 .colorScheme
                                 .onPrimaryContainer,
-                            fontSize: 18,
-                          )),
-                      const SizedBox(height: 4),
-                      Text(
-                        widget.fundraiser.description!,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Text("CONTACT DETAILS",
-                          style: TextStyle(
                             fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Initiated by: ${widget.fundraiser.initiator}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
                             color: Theme.of(context)
                                 .colorScheme
                                 .onPrimaryContainer,
-                            fontSize: 18,
-                          )),
-                      const SizedBox(height: 4),
-                      Text(
-                        widget.fundraiser.mobileNumber ?? 'Not Available',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 15),
-                      Text("HOSPITAL",
+                        const SizedBox(height: 15),
+                        Text("DESCRIPTION",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                              fontSize: 18,
+                            )),
+                        const SizedBox(height: 4),
+                        Text(
+                          widget.fundraiser.description!,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
                             color: Theme.of(context)
                                 .colorScheme
                                 .onPrimaryContainer,
-                            fontSize: 18,
-                          )),
-                      const SizedBox(height: 4),
-                      Text(
-                        widget.fundraiser.hospitalName ?? 'Not Available',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 15),
-                      Text("PATIENT ADDRESS",
+                        const SizedBox(height: 15),
+                        Text("CONTACT DETAILS",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                              fontSize: 18,
+                            )),
+                        const SizedBox(height: 4),
+                        Text(
+                          widget.fundraiser.mobileNumber ?? 'Not Available',
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
                             color: Theme.of(context)
                                 .colorScheme
                                 .onPrimaryContainer,
-                          )),
-                      const SizedBox(height: 4),
-                      Text(
-                        widget.fundraiser.address ?? 'Not Available',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
+                          ),
                         ),
-                      ),
-                    ]),
+                        const SizedBox(height: 15),
+                        Text("HOSPITAL",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                              fontSize: 18,
+                            )),
+                        const SizedBox(height: 4),
+                        Text(
+                          widget.fundraiser.hospitalName ?? 'Not Available',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        Text("PATIENT ADDRESS",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                            )),
+                        const SizedBox(height: 4),
+                        Text(
+                          widget.fundraiser.address ?? 'Not Available',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
+                          ),
+                        ),
+                      ]),
+                ),
               ),
               const SizedBox(height: 10),
             ],
@@ -259,10 +359,12 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
 
   Future<dynamic> cardFromBottom(BuildContext context) {
     return showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
         return Container(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.fromLTRB(
+              16, 16, 16, MediaQuery.of(context).viewInsets.bottom),
           child: Form(
             key: _paymentKey,
             child: SingleChildScrollView(
@@ -305,35 +407,51 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
                       validateInputBox: validateInputBox),
                   const SizedBox(height: 16),
                   if (isLoading)
-                    const Center(child: CircularProgressIndicator()),
+                    const Center(child: CircularProgressIndicator.adaptive()),
                   if (!isLoading)
                     ButtonWidget(
                         onTap: () async {
                           if (_paymentKey.currentState!.validate()) {
                             setState(() {
-                              isLoading = true;
+                              isLoading = false;
                             });
-                            Future.delayed(const Duration(seconds: 5), () {
+                            await Future.delayed(const Duration(seconds: 5),
+                                () {
                               setState(() {
-                                isLoading = false;
+                                isLoading = true;
                               });
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: const Text('Transaction Successful'),
+                                    title: Column(children: [
+                                      const Text('Transaction Successful'),
+                                      Text("Transaction Id: $transactionId"),
+                                      Text(
+                                          "Name of Donator: ${nameController.text}"),
+                                      Text(
+                                          "Amount Donated: ${amountController.text}"),
+                                      Text(
+                                          "Paid via UPI: ${upiNumberController.text}"),
+                                    ]),
                                     actions: [
                                       TextButton(
                                         onPressed: () {
-                                          Navigator.of(context).pop();
-                                          // Navigate to PaymentView page
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const PaymentView(),
-                                            ),
-                                          );
+                                          uploadPaymentsData().then((value) {
+                                            double donatedAmount = double.parse(
+                                                amountController.text);
+                                            updateFundraisersData();
+                                            updatetUserDonatedAmount(
+                                                donatedAmount);
+                                            Navigator.pop(context);
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Screen(),
+                                              ),
+                                            );
+                                          });
                                         },
                                         child: const Text('OK'),
                                       ),
@@ -348,7 +466,8 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
                                 context: context);
                           }
                         },
-                        buttonText: "Pay")
+                        buttonText: "Pay"),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),

@@ -7,7 +7,6 @@ import 'package:donative/app/features/toast.dart';
 import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/utils/pickImageUtility.dart';
 import 'package:donative/views/home_screen.dart';
-import 'package:donative/views/profile_page.dart';
 import 'package:emailjs/emailjs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -111,6 +110,9 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
   sendEmail() async {
     String imageUrl = await saveImage(file: _image!);
     double totalAmount = double.parse(_totalAmountController.text);
+    String fundraiserId =
+        FirebaseFirestore.instance.collection('fundraisers').doc().id;
+
     Map<String, dynamic> templateParams = {
       "title": _titleController.text,
       "description": _descriptionController.text,
@@ -121,6 +123,7 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
       "mobileNumber": _phoneController.text,
       "address": _addressController.text,
       "email": _emailController.text,
+      "fundraiserId": fundraiserId,
     };
 
     try {
