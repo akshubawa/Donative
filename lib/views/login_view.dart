@@ -150,7 +150,7 @@ class _LoginViewState extends State<LoginView> {
         showToast(message: "Login Successful!", context: context);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const Screen()),
+          MaterialPageRoute(builder: (context) => Screen()),
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -200,13 +200,14 @@ class _LoginViewState extends State<LoginView> {
           "address": "",
           "gender": "",
           "profilePic": profilePic,
+          "donatedAmount": 0,
         };
         DatabaseMethods().addUsers(usersData);
 
         showToast(message: "Login Successful!", context: context);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const Screen()),
+          MaterialPageRoute(builder: (context) => Screen()),
         );
       }
     } catch (e) {

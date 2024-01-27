@@ -46,7 +46,7 @@ class AuthChecker extends StatelessWidget {
           return const CircularProgressIndicator();
         }
         if (snapshot.hasData && snapshot.data != null) {
-          return const Screen();
+          return Screen();
         } else {
           return const SignupView();
         }
