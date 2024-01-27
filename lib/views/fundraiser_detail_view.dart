@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donative/app/features/button_widget.dart';
+import 'package:donative/app/features/custom_info_text.dart';
 import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
 import 'package:donative/app/models/fundraiser.dart';
@@ -256,15 +257,11 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.fundraiser.title,
-                          style: TextStyle(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
+                        CustomInfoText(
+                          cardText: widget.fundraiser.title,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          cardColor: Colors.grey[200]!,
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -278,14 +275,12 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
                           ),
                         ),
                         const SizedBox(height: 15),
-                        Text("DESCRIPTION",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                              fontSize: 18,
-                            )),
+                        CustomInfoText(
+                          cardText: "DESCRIPTION",
+                          cardColor: Colors.grey[200]!,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                         const SizedBox(height: 4),
                         Text(
                           widget.fundraiser.description!,
@@ -298,14 +293,12 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
                           ),
                         ),
                         const SizedBox(height: 15),
-                        Text("CONTACT DETAILS",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                              fontSize: 18,
-                            )),
+                        CustomInfoText(
+                          cardText: "CONTACT DETAILS",
+                          cardColor: Colors.grey[200]!,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                         const SizedBox(height: 4),
                         Text(
                           widget.fundraiser.mobileNumber ?? 'Not Available',
@@ -318,14 +311,12 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
                           ),
                         ),
                         const SizedBox(height: 15),
-                        Text("HOSPITAL",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                              fontSize: 18,
-                            )),
+                        CustomInfoText(
+                          cardText: "HOSPITAL",
+                          cardColor: Colors.grey[200]!,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                         const SizedBox(height: 4),
                         Text(
                           widget.fundraiser.hospitalName ?? 'Not Available',
@@ -338,14 +329,12 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
                           ),
                         ),
                         const SizedBox(height: 15),
-                        Text("PATIENT ADDRESS",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                            )),
+                        CustomInfoText(
+                          cardText: "PATIENT ADDRESS",
+                          cardColor: Colors.grey[200]!,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                         const SizedBox(height: 4),
                         Text(
                           widget.fundraiser.address ?? 'Not Available',

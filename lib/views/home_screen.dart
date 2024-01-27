@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donative/app/features/build_funding_card.dart';
 import 'package:donative/app/models/fundraiser.dart';
 import 'package:donative/views/fundraiser_detail_view.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,10 +19,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        title: const Text(
-          "Donative",
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Container(
+          width: MediaQuery.of(context).size.width * 0.3,
+          decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+              borderRadius: BorderRadius.circular(20)),
+          child: Center(
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(top: 2, bottom: 2, left: 8, right: 8),
+              child: const Text(
+                "Donative",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
         ),
       ),
       body: Padding(
@@ -33,22 +48,25 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 8,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            Stack(
+              alignment: Alignment.centerRight,
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: _searchController,
-                    onChanged: (value) {
-                      // Trigger a rebuild with the updated search text
-                      setState(() {});
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Search...',
-                      filled: true,
-                      fillColor: Theme.of(context).colorScheme.surface,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 5),
+                    child: TextField(
+                      controller: _searchController,
+                      onChanged: (value) {
+                        // Trigger a rebuild with the updated search text
+                        setState(() {});
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Search...',
+                        filled: true,
+                        fillColor: Theme.of(context).colorScheme.surface,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                       ),
                     ),
                   ),

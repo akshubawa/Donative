@@ -1,3 +1,4 @@
+import 'package:donative/app/features/custom_info_text.dart';
 import 'package:donative/app/models/fundraiser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
@@ -20,7 +21,7 @@ class BuildFundingCard extends StatelessWidget {
 
     return Padding(
       padding:
-          const EdgeInsets.only(top: 5.0, bottom: 3.0, left: 16.0, right: 16.0),
+          const EdgeInsets.only(top: 5.0, bottom: 3.0, left: 10.0, right: 5.0),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -48,20 +49,25 @@ class BuildFundingCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      fundraiser.title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                    CustomInfoText(
+                      cardColor: Colors.grey[300]!,
+                      cardText: fundraiser.title,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      
                     ),
+
                     const SizedBox(height: 4),
-                    Text(
-                      'Initiated by: ${fundraiser.initiator}',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.outline,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 2.0),
+                      child: Text(
+                        'Initiated by: ${fundraiser.initiator}',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.outline,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -72,17 +78,16 @@ class BuildFundingCard extends StatelessWidget {
                         children: [
                           Text(
                             'Raised: ₹${fundraiser.raisedAmount.toInt()}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          Text(
-                            'Total: ₹${fundraiser.totalAmount.toInt()}',
-                            style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                            ),
+                          CustomInfoText(
+                            cardColor: Colors.grey[300]!,
+                            cardText:
+                                'Total: ₹${fundraiser.raisedAmount.toInt()}',
+                            textElevation: 0.5,
                           ),
                         ]),
                     const SizedBox(height: 8),
