@@ -28,6 +28,8 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
   bool isLoading = false;
 
   String transactionId = DateTime.now().millisecondsSinceEpoch.toString();
+  bool get isFullyFunded =>
+      widget.fundraiser.raisedAmount >= widget.fundraiser.totalAmount;
 
   uploadPaymentsData() async {
     var firebaseUser = FirebaseAuth.instance.currentUser;
@@ -218,11 +220,36 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
                         size: 20,
                       ),
                       const SizedBox(height: 10),
-                      ButtonWidget(
-                        onTap: () {
-                          cardFromBottom(context);
-                        },
-                        buttonText: "DONATE NOW",
+                      ElevatedButton(
+                        onPressed: isFullyFunded
+                            ? null
+                            : () => cardFromBottom(context),
+                        style: ElevatedButton.styleFrom(
+                          primary:
+                              Theme.of(context).colorScheme.primaryContainer,
+                          onPrimary: Theme.of(context).colorScheme.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: BorderSide(
+                              color: Theme.of(context).colorScheme.primary,
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        child: Container(
+                          height: 50,
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(
+                              "DONATE NOW",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                       TextButton.icon(
                         onPressed: () {
