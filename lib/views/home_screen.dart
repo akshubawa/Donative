@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 8),
+                    padding: const EdgeInsets.only(left: 8, right: 5),
                     child: TextField(
                       controller: _searchController,
                       onChanged: (value) {
