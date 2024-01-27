@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 
 class MyDonationsView extends StatelessWidget {
   final Payment? payment;
-  final Users? user;
-  const MyDonationsView({Key? key, this.payment, this.user}) : super(key: key);
+  const MyDonationsView({Key? key, this.payment}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +24,13 @@ class MyDonationsView extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(8, 20, 8, 5),
         child: Column(
           children: [
-            Text(
-              "YOUR TOTAL DONATION: ₹${user?.donatedAmount ?? '0'} ",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Theme.of(context).colorScheme.primary),
-            ),
+            // Text(
+            //   "YOUR TOTAL DONATION: ₹${user?.donatedAmount ?? '0'} ",
+            //   style: TextStyle(
+            //       fontWeight: FontWeight.bold,
+            //       fontSize: 20,
+            //       color: Theme.of(context).colorScheme.primary),
+            // ),
             const SizedBox(
               height: 8,
             ),

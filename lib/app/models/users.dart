@@ -37,7 +37,7 @@ class Users {
   String firstName;
 
   Users({
-    this.address,
+    this.address, 
     this.dob,
     required this.donatedAmount,
     this.profilePic,

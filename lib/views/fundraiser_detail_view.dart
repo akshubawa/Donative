@@ -30,12 +30,13 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
   String transactionId = DateTime.now().millisecondsSinceEpoch.toString();
 
   uploadPaymentsData() async {
+    var firebaseUser = FirebaseAuth.instance.currentUser;
     Map<String, dynamic> paymentsData = {
       "name": nameController.text,
       "amount": amountController.text,
       "upiNumber": upiNumberController.text,
       "fundraiserId": widget.fundraiser.fundraiserId,
-      "userId": widget.fundraiser.uid,
+      "userId": firebaseUser!.uid,
       "date_time": DateTime.now(),
       "transactionId": transactionId,
     };
