@@ -4,6 +4,7 @@ import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
 import 'package:donative/app/features/button_widget.dart';
 import 'package:donative/app/utils/pickImageUtility.dart';
+import 'package:donative/views/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -331,11 +332,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             'address': _addressController.text,
                             // Add other fields as needed
                           }).then((value) {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => const ProfilePage()),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ProfilePage()),
+                            );
                             showToast(message: 'Profile updated successfully!');
                           }).catchError((error) {
                             showToast(
