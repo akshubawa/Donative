@@ -25,6 +25,8 @@ class AddFundraiserView extends StatefulWidget {
 class _AddFundraiserViewState extends State<AddFundraiserView> {
   String? _patientImageUrl;
   Uint8List? _image;
+  String fundraiserId =
+      FirebaseFirestore.instance.collection('fundraisers').doc().id;
 
   final FirebaseStorage _storage = FirebaseStorage.instance;
   String userId = FirebaseAuth.instance.currentUser!.uid;
@@ -103,6 +105,7 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
       "createdAt": DateTime.now().millisecondsSinceEpoch.toString(),
       "isApproved": false,
       "email": _emailController.text,
+      "fundraiserId": fundraiserId,
     };
     DatabaseMethods().addFundraisers(fundraisersData);
   }
@@ -110,8 +113,6 @@ class _AddFundraiserViewState extends State<AddFundraiserView> {
   sendEmail() async {
     String imageUrl = await saveImage(file: _image!);
     double totalAmount = double.parse(_totalAmountController.text);
-    String fundraiserId =
-        FirebaseFirestore.instance.collection('fundraisers').doc().id;
 
     Map<String, dynamic> templateParams = {
       "title": _titleController.text,
