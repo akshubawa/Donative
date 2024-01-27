@@ -39,7 +39,7 @@ class DonationListView extends StatelessWidget {
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('payments')
-                  .where('fundraiserId', isEqualTo: payment?.fundraiserId)
+                  .where('fundraiserId', isEqualTo: fundraiser?.fundraiserId)
                   .snapshots(),
               builder: (context, snapshot) {
                 // print("SNAPSHOT CONNECTION STATE: $snapshot.connectionState");

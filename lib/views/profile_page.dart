@@ -11,8 +11,9 @@ import 'package:flutter/material.dart';
 import '../app/features/string_extension.dart';
 
 class ProfilePage extends StatelessWidget {
-
-  const ProfilePage({Key? key, }) : super(key: key);
+  const ProfilePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +87,7 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  const MyDonationsView()),
+                              builder: (context) => const MyDonationsView()),
                         );
                       },
                       buttonText: "My Donations"),
@@ -117,13 +117,20 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  const ContactUsView()),
+                              builder: (context) => const ContactUsView()),
                         );
                       },
                       buttonText: "Contact Us"),
                   const SizedBox(height: 15),
-                  ButtonWidget(onTap: () {}, buttonText: "About Us"),
+                  ButtonWidget(
+                      onTap: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => GetUserData(user!.uid)),
+                        // );
+                      },
+                      buttonText: "About Us"),
                   const SizedBox(height: 15),
                   ButtonWidget(
                     onTap: () {

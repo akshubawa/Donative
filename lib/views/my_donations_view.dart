@@ -1,17 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donative/app/features/my_donation_card.dart';
 import 'package:donative/app/models/payments.dart';
-import 'package:donative/app/models/users.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyDonationsView extends StatelessWidget {
   final Payment? payment;
-  const MyDonationsView({Key? key, this.payment}) : super(key: key);
+  const MyDonationsView({
+    Key? key,
+    this.payment,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String? currentUserId = FirebaseAuth.instance.currentUser?.uid;
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
@@ -24,13 +27,34 @@ class MyDonationsView extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(8, 20, 8, 5),
         child: Column(
           children: [
-            // Text(
-            //   "YOUR TOTAL DONATION: ₹${user?.donatedAmount ?? '0'} ",
-            //   style: TextStyle(
-            //       fontWeight: FontWeight.bold,
-            //       fontSize: 20,
-            //       color: Theme.of(context).colorScheme.primary),
-            // ),
+            FutureBuilder<DocumentSnapshot>(
+              future: users.doc(currentUserId).get(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text("Something went wrong");
+                }
+
+                if (snapshot.hasData && !snapshot.data!.exists) {
+                  return Text("Document does not exist");
+                }
+
+                if (snapshot.connectionState == ConnectionState.done) {
+                  Map<String, dynamic> data =
+                      snapshot.data!.data() as Map<String, dynamic>;
+                  return Text(
+                    "YOUR TOTAL DONATION: ₹${data['donatedAmount'] ?? '0'}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  );
+                }
+
+                return Text("loading");
+              },
+            ),
             const SizedBox(
               height: 8,
             ),

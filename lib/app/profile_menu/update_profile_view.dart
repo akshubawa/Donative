@@ -31,7 +31,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     try {
       String imageUrl = await (String childName, Uint8List file) async {
         try {
-          Reference ref = _storage.ref().child(childName);
+          Reference ref = _storage.ref().child('profileImages/$childName.jpg');
           UploadTask uploadTask = ref.putData(file);
           TaskSnapshot snapshot = await uploadTask;
           String downloadUrl = await snapshot.ref.getDownloadURL();
