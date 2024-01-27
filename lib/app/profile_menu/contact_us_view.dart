@@ -1,6 +1,7 @@
 import 'package:donative/app/features/button_widget.dart';
 import 'package:donative/app/features/form_container_widget.dart';
 import 'package:donative/app/features/toast.dart';
+import 'package:donative/app/models/payments.dart';
 import 'package:donative/views/profile_page.dart';
 import 'package:emailjs/emailjs.dart';
 import 'package:flutter/material.dart';
@@ -176,7 +177,6 @@ class _ContactUsViewState extends State<ContactUsView> {
                   buttonText: "Send Message",
                 ),
                 const SizedBox(height: 8),
-               
                 Text(
                   "OR",
                   textAlign: TextAlign.center,

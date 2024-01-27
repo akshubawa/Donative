@@ -7,7 +7,6 @@ import 'package:donative/app/features/toast.dart';
 import 'package:donative/app/user_auth/database_methods.dart';
 import 'package:donative/app/utils/pickImageUtility.dart';
 import 'package:donative/views/home_screen.dart';
-import 'package:donative/views/profile_page.dart';
 import 'package:emailjs/emailjs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';

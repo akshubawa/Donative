@@ -17,7 +17,7 @@ class DatabaseMethods {
         .set(fundraisersInfoMap);
   }
 
-   Future addPayments(Map<String, dynamic> paymentsInfoMap) async {
+  Future addPayments(Map<String, dynamic> paymentsInfoMap) async {
     return await FirebaseFirestore.instance
         .collection("payments")
         .doc()
