@@ -148,7 +148,9 @@ class _LoginViewState extends State<LoginView> {
 
       if (user != null) {
         showToast(message: "Login Successful!", context: context);
-        Navigator.push(
+        //  clearSession();
+        Navigator.pop(context, true);
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Screen()),
         );
@@ -208,7 +210,9 @@ class _LoginViewState extends State<LoginView> {
         DatabaseMethods().addUsers(usersData);
 
         showToast(message: "Login Successful!", context: context);
-        Navigator.push(
+        
+        Navigator.pop(context, true);
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Screen()),
         );

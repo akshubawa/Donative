@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donative/app/features/build_funding_card.dart';
 import 'package:donative/app/models/fundraiser.dart';
 import 'package:donative/views/fundraiser_detail_view.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -51,22 +50,20 @@ class _HomeScreenState extends State<HomeScreen> {
             Stack(
               alignment: Alignment.centerRight,
               children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 5),
-                    child: TextField(
-                      controller: _searchController,
-                      onChanged: (value) {
-                        // Trigger a rebuild with the updated search text
-                        setState(() {});
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Search...',
-                        filled: true,
-                        fillColor: Theme.of(context).colorScheme.surface,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 5),
+                  child: TextField(
+                    controller: _searchController,
+                    onChanged: (value) {
+                      // Trigger a rebuild with the updated search text
+                      setState(() {});
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Search...',
+                      filled: true,
+                      fillColor: Theme.of(context).colorScheme.surface,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                   ),

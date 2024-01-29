@@ -25,7 +25,7 @@ class FundraiserDetailView extends StatefulWidget {
 }
 
 class _FundraiserDetailViewState extends State<FundraiserDetailView> {
-  bool isLoading = false;
+  bool _isLoading = false;
 
   String transactionId = DateTime.now().millisecondsSinceEpoch.toString();
   bool get isFullyFunded =>
@@ -432,67 +432,52 @@ class _FundraiserDetailViewState extends State<FundraiserDetailView> {
                       textInputType: TextInputType.text,
                       validateInputBox: validateInputBox),
                   const SizedBox(height: 16),
-                  if (isLoading)
-                    const Center(child: CircularProgressIndicator.adaptive()),
-                  if (!isLoading)
-                    ButtonWidget(
-                        onTap: () async {
-                          if (_paymentKey.currentState!.validate()) {
-                            setState(() {
-                              isLoading = false;
-                            });
-                            await Future.delayed(const Duration(seconds: 5),
-                                () {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Column(children: [
-                                      const Text('Transaction Successful'),
-                                      Text("Transaction Id: $transactionId"),
-                                      Text(
-                                          "Name of Donator: ${nameController.text}"),
-                                      Text(
-                                          "Amount Donated: ${amountController.text}"),
-                                      Text(
-                                          "Paid via UPI: ${upiNumberController.text}"),
-                                    ]),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          uploadPaymentsData().then((value) {
-                                            double donatedAmount = double.parse(
-                                                amountController.text);
-                                            updateFundraisersData();
-                                            updatetUserDonatedAmount(
-                                                donatedAmount);
-                                            Navigator.pop(context);
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const Screen(),
-                                              ),
-                                            );
-                                          });
-                                        },
-                                        child: const Text('OK'),
-                                      ),
-                                    ],
-                                  );
-                                },
+                  ButtonWidget(
+                      onTap: () async {
+                        if (_paymentKey.currentState!.validate()) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Column(children: [
+                                  const Text('Transaction Successful'),
+                                  Text("Transaction Id: $transactionId"),
+                                  Text(
+                                      "Name of Donator: ${nameController.text}"),
+                                  Text(
+                                      "Amount Donated: ${amountController.text}"),
+                                  Text(
+                                      "Paid via UPI: ${upiNumberController.text}"),
+                                ]),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      uploadPaymentsData().then((value) {
+                                        double donatedAmount =
+                                            double.parse(amountController.text);
+                                        updateFundraisersData();
+                                        updatetUserDonatedAmount(donatedAmount);
+                                        Navigator.pop(context, true);
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Screen()),
+                                        );
+                                      });
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
                               );
-                            });
-                          } else {
-                            showToast(
-                                message: "Please fill all the required fields",
-                                context: context);
-                          }
-                        },
-                        buttonText: "Pay"),
+                            },
+                          );
+                        } else {
+                          showToast(
+                              message: "Please fill all the required fields",
+                              context: context);
+                        }
+                      },
+                      buttonText: "Pay"),
                   const SizedBox(height: 20),
                 ],
               ),
